@@ -6,10 +6,31 @@
 */
 
 
+#include <fost/push_back>
+#include <fost/string>
 #include <metachatr/parser.hpp>
 
 
-fostlib::json metachatr::parse(const fostlib::string &s) {
-    return fostlib::json::array_t();
-}
+using namespace fostlib;
 
+
+json metachatr::parse(const string &s) {
+    json ast;
+    string block;
+    utf32 p = 0;
+    for ( string::const_iterator c(s.begin()); c != s.end(); ++c ) {
+        utf32 t = *c;
+        if ( t != '\n' && p == '\n' && (t == ' ') != (block[0] == ' ') ) {
+            if ( block[0] == ' ' )
+                push_back(ast, json::parse(block));
+            else
+                push_back(ast, block);
+            block = string();
+        }
+        if ( t != '\r' )
+            block += t;
+        p = t;
+    }
+    push_back(ast, block);
+    return ast;
+}

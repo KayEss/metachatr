@@ -16,5 +16,13 @@ FSL_TEST_SUITE( parser_parse );
 FSL_TEST_FUNCTION( empty_source ) {
     FSL_CHECK_EQ(metachatr::parse(fostlib::string()),
         fostlib::json::array_t());
+    FSL_CHECK_EQ(metachatr::parse("\n"),
+        fostlib::json::array_t());
+}
+
+FSL_TEST_FUNCTION( single_comment ) {
+    FSL_CHECK_EQ(
+        fostlib::json::unparse(metachatr::parse("A comment"), false),
+        "[\"A comment\"]");
 }
 
