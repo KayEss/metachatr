@@ -6,4 +6,12 @@
 */
 
 
+#ifndef METACHATR_PARSER
+#define METACHATR_PARSER
+#pragma once
+
+
 #include <metachatr/parser.hpp>
+
+
+#endif // METACHATR_PARSER
