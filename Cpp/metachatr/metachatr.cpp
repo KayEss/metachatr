@@ -16,7 +16,9 @@ FSL_MAIN(
     L"metachatr - Execute a Metachatr program\n"
         L"Copyright (c) 2009-2011 Kirit Saelensminde."
 )( fostlib::ostream &out, fostlib::arguments &args ) {
-    fostlib::string program = fostlib::utf::load_file(
+    fostlib::string source = fostlib::utf::load_file(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value()));
+    fostlib::json ast = metachatr::parse(source);
+    out << fostlib::json::unparse(ast, true) << std::endl;
     return 0;
 }

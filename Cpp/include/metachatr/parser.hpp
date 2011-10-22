@@ -11,4 +11,17 @@
 #pragma once
 
 
+#include <fost/core>
+
+
+namespace metachatr {
+
+
+    /// A simple recursive parser for .metachatr files
+    fostlib::json parse(const fostlib::string &);
+
+
+}
+
+
 #endif // METACHATR_PARSER_HPP

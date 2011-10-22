@@ -6,10 +6,15 @@
 */
 
 
-#include <metachatr/parser.hpp>
+#include <fost/test>
+#include <metachatr/parser>
 
 
-fostlib::json metachatr::parse(const fostlib::string &s) {
-    return fostlib::json::array_t();
+FSL_TEST_SUITE( parser_parse );
+
+
+FSL_TEST_FUNCTION( empty_source ) {
+    FSL_CHECK_EQ(metachatr::parse(fostlib::string()),
+        fostlib::json::array_t());
 }
 

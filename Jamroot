@@ -16,4 +16,5 @@ fost-project metachatr
 # The parts of the system that need to be built
 alias metachatr :
         Cpp/metachatr
+        Cpp/metachatr-parser
     ;
