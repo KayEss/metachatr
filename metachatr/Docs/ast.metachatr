@@ -1,0 +1,1 @@
+Metachatr's abstract syntax tree (AST) is very LISP like, but is based on JSON data structures instead of lists.
