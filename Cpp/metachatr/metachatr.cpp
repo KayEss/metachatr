@@ -7,8 +7,7 @@
 
 
 #include <fost/main>
-#include <fost/unicode>
-#include <metachatr/parser>
+#include <metachatr/runtime>
 
 
 FSL_MAIN(
@@ -16,9 +15,8 @@ FSL_MAIN(
     L"metachatr - Execute a Metachatr program\n"
         L"Copyright (c) 2009-2011 Kirit Saelensminde."
 )( fostlib::ostream &out, fostlib::arguments &args ) {
-    fostlib::string source = fostlib::utf::load_file(
-        fostlib::coerce<boost::filesystem::wpath>(args[1].value()));
-    fostlib::json ast = metachatr::parse(source);
+    fostlib::json ast = metachatr::filehandler(
+        fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
     out << fostlib::json::unparse(ast, true) << std::endl;
     return 0;
 }

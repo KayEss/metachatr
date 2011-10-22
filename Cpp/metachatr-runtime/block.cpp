@@ -7,13 +7,9 @@
 
 
 #include <metachatr/runtime.hpp>
-#include <metachatr/parser>
 
 
-metachatr::block metachatr::filehandler(
-    const boost::filesystem::wpath &location
-) {
-    fostlib::string source = fostlib::utf::load_file(location);
-    return metachatr::parse(source);
+metachatr::block::block(const fostlib::json &basic)
+: json(basic) {
 }
 

@@ -12,13 +12,25 @@
 
 
 #include <fost/core>
+#include <fost/unicode>
 
 
 namespace metachatr {
 
 
+    /// This type describes a Metachatr AST in an internal executable form
+    class block {
+    public:
+        /// Build an executable block from a JSON representation
+        block(const fostlib::json &);
+
+        /// Stores the JSON representation of the code block
+        fostlib::accessors<fostlib::json> json;
+    };
+
+
     /// Take the file contents and produce the ready-to-execute AST representation
-    fostlib::json filehandler(const boost::filesystem::wpath &location);
+    block filehandler(const boost::filesystem::wpath &location);
 
 
 }
