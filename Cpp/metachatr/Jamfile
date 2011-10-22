@@ -1,0 +1,6 @@
+
+fost-exe metachatr
+    :
+        ../metachatr-parser
+        metachatr.cpp
+    ;
