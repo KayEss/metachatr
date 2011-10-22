@@ -26,6 +26,9 @@ namespace metachatr {
 
         /// Stores the JSON representation of the code block
         fostlib::accessors<fostlib::json> json;
+
+        /// Executes the block and returns the new form
+        block operator() (const block &scope);
     };
 
 
