@@ -1,1 +1,11 @@
 Metachatr's abstract syntax tree (AST) is very LISP like, but is based on JSON data structures instead of lists.
+
+The simplest form is the s-expression. This mimics exactly what LISP does.
+
+    ["echo", "Hello"]
+
+These can be nested.
+
+    ["echo", ["+", 2, 3]]
+
+In an s-expression the first element in the list is the function name that is to be called and the remaining items are taken as the function's arguments.
