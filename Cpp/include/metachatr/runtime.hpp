@@ -37,7 +37,7 @@ namespace metachatr {
         block(const fostlib::json &);
 
         /// Stores the JSON representation of the code block
-        fostlib::accessors<fostlib::json> json;
+        fostlib::accessors<fostlib::json, fostlib::lvalue> json;
 
         /// Name bindings for evaluating the nested expression
         fostlib::accessors<

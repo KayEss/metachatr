@@ -11,10 +11,60 @@
 
 
 namespace {
+    struct list_exec : public boost::static_visitor< bool > {
+        list_exec(metachatr::block &module, bool seen_list)
+        : module(module), seen_list(seen_list) {
+        }
+        metachatr::block &module;
+        const bool seen_list;
+
+        bool operator() (const fostlib::json::atom_t &t) {
+            return false;
+        }
+        bool operator() (const fostlib::json::array_t &a) {
+            metachatr::block section = fostlib::json(a);
+            fostlib::push_back(module.json(), section(module).json());
+            return true;
+        }
+        bool operator() (const fostlib::json::object_t &o) {
+            throw fostlib::exceptions::not_implemented(
+                "Executing an object from a module list");
+        }
+    };
+
+    /// Execute the top level of the module
+    struct first_level : public boost::static_visitor< metachatr::block > {
+        first_level(const metachatr::block &scope)
+        : scope(scope) {
+        }
+        const metachatr::block &scope;
+
+        metachatr::block operator() (const fostlib::json::atom_t &t) const {
+            throw fostlib::exceptions::not_implemented(
+                "Loading an atom at the top level of a module");
+        }
+        metachatr::block operator() (const fostlib::json::array_t &a) const {
+            bool seen_list = false;
+            metachatr::block module(scope);
+            for ( std::size_t p(0); p != a.size(); ++p ) {
+                list_exec op(module, seen_list);
+                seen_list = boost::apply_visitor(op, *a[p]);
+//                 metachatr::block section(*a[p]);
+//                 metachatr::block evaled(section(module));
+//                 fostlib::push_back(module.json(), evaled.json());
+            }
+            return module;
+        }
+        metachatr::block operator() (const fostlib::json::object_t &o) const {
+            throw fostlib::exceptions::not_implemented(
+                "Loading an object at the top level of a module");
+        }
+    };
+
     metachatr::block module(
         const fostlib::string &, const metachatr::block &scope, const fostlib::json &args
     ) {
-        return args;
+        return boost::apply_visitor(first_level(scope), args);
     }
 }
 
