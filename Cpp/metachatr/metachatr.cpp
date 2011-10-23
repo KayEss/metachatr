@@ -26,6 +26,7 @@ FSL_MAIN(
 )( fostlib::ostream &out, fostlib::arguments &args ) {
     // Build the block that describes the builtin functions
     metachatr::block builtins;
+    builtins["+"] = metachatr::lib::plus();
     builtins["echo"] = boost::lambda::bind(
         echo, boost::ref(out), boost::lambda::_1, boost::lambda::_2, boost::lambda::_3);
     builtins["module"] = metachatr::lib::module();

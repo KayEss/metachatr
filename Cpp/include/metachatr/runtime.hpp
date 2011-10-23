@@ -72,6 +72,9 @@ namespace metachatr {
         /// Execute a module
         lambda module();
 
+        /// Add numbers
+        lambda plus();
+
 
     }
 
