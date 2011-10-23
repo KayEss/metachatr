@@ -29,11 +29,16 @@ FSL_MAIN(
     builtins["echo"] = boost::lambda::bind(
         echo, boost::ref(out), boost::lambda::_1, boost::lambda::_2, boost::lambda::_3);
     builtins["module"] = metachatr::lib::module();
-    // Load the file and print out the stream
+    // Load the file
     fostlib::json ast = metachatr::filehandler(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
+    // Buld the s-expression we will execute
+    fostlib::json sexpr;
+    fostlib::push_back(sexpr, "module");
+    for ( fostlib::json::const_iterator i(ast.begin()); i != ast.end(); ++i )
+        fostlib::push_back(sexpr, *i);
     // Execute the code in the AST
-    metachatr::block code(ast);
+    metachatr::block code(sexpr);
     metachatr::block result = code(builtins);
     // Print the resultant JSON (for now)
     out << fostlib::json::unparse(result.json(), true) << std::endl;
