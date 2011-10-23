@@ -23,26 +23,25 @@ metachatr::block::block(const fostlib::json &basic)
 
 
 namespace {
-    struct evaluator : public boost::static_visitor< fostlib::json > {
+    struct evaluator : public boost::static_visitor< metachatr::block > {
         evaluator(const metachatr::block &myscope)
         : myscope(myscope) {
         }
         const metachatr::block &myscope;
 
-        fostlib::json operator() (const fostlib::json::atom_t &t) const {
+        metachatr::block operator() (const fostlib::json::atom_t &t) const {
             return fostlib::json(t);
         }
-        fostlib::json operator() (const fostlib::json::array_t &a) const {
-            return a;
+        metachatr::block operator() (const fostlib::json::array_t &a) const {
+            return fostlib::json(a);
         }
-        fostlib::json operator() (const fostlib::json::object_t &o) const {
-            return o;
+        metachatr::block operator() (const fostlib::json::object_t &o) const {
+            return fostlib::json(o);
         }
     };
 
-    fostlib::json eval(const metachatr::block &expr, const metachatr::block &parent) {
-        evaluator context(parent);
-        return boost::apply_visitor(context, expr.json());
+    metachatr::block eval(const metachatr::block &expr, const metachatr::block &parent) {
+        return boost::apply_visitor(evaluator(parent), expr.json());
     }
 }
 
