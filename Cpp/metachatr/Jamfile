@@ -2,5 +2,6 @@
 fost-exe metachatr
     :
         ../metachatr-parser
+        ../metachatr-runtime
         metachatr.cpp
     ;

@@ -17,4 +17,5 @@ fost-project metachatr
 alias metachatr :
         Cpp/metachatr
         Cpp/metachatr-parser
+        Cpp/metachatr-runtime
     ;

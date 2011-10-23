@@ -1,0 +1,6 @@
+
+fost-lib-autotest metachatr-runtime
+    : Cpp/metachatr-runtime
+    :
+        ../metachatr-parser
+    ;
