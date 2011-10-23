@@ -23,6 +23,12 @@ metachatr::block::block(const fostlib::json &basic)
 
 
 namespace {
+    metachatr::block eval(const metachatr::block &expr, const metachatr::block &parent);
+    std::pair<fostlib::json, fostlib::json> list(const fostlib::json::array_t a) {
+        std::pair<fostlib::json, fostlib::json> split(
+            *a[0], fostlib::json());
+        return split;
+    }
     struct evaluator : public boost::static_visitor< metachatr::block > {
         evaluator(const metachatr::block &myscope)
         : myscope(myscope) {
@@ -33,7 +39,14 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            return fostlib::json(a);
+            std::pair<fostlib::json, fostlib::json> sexpr(list(a));
+            fostlib::string fn_name = fostlib::coerce<fostlib::string>(
+                eval(sexpr.first, myscope).json());
+            std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(
+                myscope.bindings().find(fn_name));
+            if ( lambda_p  == myscope.bindings().end() )
+                throw fostlib::exceptions::not_implemented("Name not bound", fn_name);
+            return lambda_p->second(fn_name, myscope, sexpr.second);
         }
         metachatr::block operator() (const fostlib::json::object_t &o) const {
             return fostlib::json(o);

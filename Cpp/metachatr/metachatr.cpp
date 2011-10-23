@@ -30,6 +30,8 @@ FSL_MAIN(
     // Load the file and print out the stream
     fostlib::json ast = metachatr::filehandler(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
-    out << fostlib::json::unparse(ast, true) << std::endl;
+    metachatr::block code(ast);
+    fostlib::json result = code(builtins).json();
+    out << fostlib::json::unparse(result, true) << std::endl;
     return 0;
 }
