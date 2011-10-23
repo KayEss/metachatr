@@ -12,8 +12,10 @@
 
 namespace {
     fostlib::json echo(fostlib::ostream &out,
-            const fostlib::string &, const metachatr::block &, const fostlib::json &args) {
-        out << fostlib::json::unparse(args, true) << std::endl;
+            const fostlib::string &, const metachatr::block &scope, const fostlib::json &args) {
+        for ( fostlib::json::const_iterator i(args.begin()); i != args.end(); ++i )
+            out << metachatr::block(*i)(scope).json().get<fostlib::string>().value(fostlib::string());
+        out << std::endl;
         return args;
     }
 }
