@@ -7,8 +7,16 @@
 
 
 #include <metachatr/runtime.hpp>
+#include <boost/lambda/bind.hpp>
 
 
+/*
+    metachatr::block
+*/
+
+
+metachatr::block::block() {
+}
 metachatr::block::block(const fostlib::json &basic)
 : json(basic) {
 }
@@ -16,11 +24,10 @@ metachatr::block::block(const fostlib::json &basic)
 
 namespace {
     struct evaluator : public boost::static_visitor< fostlib::json > {
-        evaluator(const metachatr::block &myscope,
-            const metachatr::block &parentscope)
-        : myscope(myscope), parentscope(parentscope) {
+        evaluator(const metachatr::block &myscope)
+        : myscope(myscope) {
         }
-        const metachatr::block &myscope, &parentscope;
+        const metachatr::block &myscope;
 
         fostlib::json operator() (const fostlib::json::atom_t &t) const {
             return fostlib::json(t);
@@ -34,7 +41,7 @@ namespace {
     };
 
     fostlib::json eval(const metachatr::block &expr, const metachatr::block &parent) {
-        evaluator context(expr, parent);
+        evaluator context(parent);
         return boost::apply_visitor(context, expr.json());
     }
 }
@@ -46,3 +53,32 @@ metachatr::block metachatr::block::operator() (
     return eval(*this, scope);
 }
 
+
+metachatr::block::binding_proxy metachatr::block::operator[] ( const fostlib::string &n ) {
+    return binding_proxy(*this, n);
+}
+
+
+/*
+    metachatr::block::binding_proxy
+*/
+
+
+metachatr::block::binding_proxy::binding_proxy(block &b, const fostlib::string &n)
+: b(b), n(n) {
+}
+
+namespace {
+    fostlib::json fn_wrapper(
+        boost::function< fostlib::json ( const fostlib::json &args ) > fn,
+        const fostlib::string &, const metachatr::block &, const fostlib::json &arguments
+    ) {
+        return fn(arguments);
+    }
+}
+void metachatr::block::binding_proxy::operator= (
+    boost::function< fostlib::json ( const fostlib::json &args ) > fn
+) {
+    b.bindings()[n] = boost::lambda::bind(fn_wrapper, fn,
+        boost::lambda::_1, boost::lambda::_2, boost::lambda::_3);
+}

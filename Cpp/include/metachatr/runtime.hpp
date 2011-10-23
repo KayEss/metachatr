@@ -23,13 +23,16 @@ namespace metachatr {
 
     /// A Metachatr lambda
     typedef boost::function<
-            block ( const block &scope, const fostlib::string &name, const fostlib::json &arguments )
+            block ( const fostlib::string &name, const block &scope, const fostlib::json &arguments )
         > lambda;
 
 
     /// This type describes a Metachatr AST in an internal executable form
     class block {
     public:
+        /// Create an empty block
+        block();
+
         /// Build an executable block from a JSON representation
         block(const fostlib::json &);
 
@@ -37,10 +40,25 @@ namespace metachatr {
         fostlib::accessors<fostlib::json> json;
 
         /// Name bindings for evaluating the nested expression
-        std::map<fostlib::string, lambda> bindings;
+        fostlib::accessors<
+            std::map<fostlib::string, lambda>, fostlib::lvalue > bindings;
 
         /// Executes the block and returns the new form
         block operator() (const block &scope);
+
+        /// Used as a proxy to allow us to implement name bindings in code more easily
+        class binding_proxy {
+            /// Construct the binding proxy
+            binding_proxy(block &, const fostlib::string &);
+            block &b; fostlib::string n;
+            friend class block;
+        public:
+            /// Allow a new JSON processing function to be
+            void operator= ( boost::function< fostlib::json ( const fostlib::json &args ) > fn );
+        };
+
+        /// Allow a function that just takes some JSON to be bound to a name
+        binding_proxy operator[] ( const fostlib::string & );
     };
 
 

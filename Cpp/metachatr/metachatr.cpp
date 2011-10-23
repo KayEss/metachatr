@@ -10,11 +10,24 @@
 #include <metachatr/runtime>
 
 
+namespace {
+    fostlib::json echo(fostlib::ostream &out, const fostlib::json &js) {
+        out << fostlib::json::unparse(js, true) << std::endl;
+        return js;
+    }
+}
+
+
 FSL_MAIN(
     L"metachatr",
     L"metachatr - Execute a Metachatr program\n"
         L"Copyright (c) 2009-2011 Kirit Saelensminde."
 )( fostlib::ostream &out, fostlib::arguments &args ) {
+    // Build the block that describes the builtin functions
+    metachatr::block builtins;
+    builtins["echo"] = boost::lambda::bind(
+        echo, boost::ref(out), boost::lambda::_1);
+    // Load the file and print out the stream
     fostlib::json ast = metachatr::filehandler(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
     out << fostlib::json::unparse(ast, true) << std::endl;
