@@ -18,6 +18,15 @@
 namespace metachatr {
 
 
+    class block;
+
+
+    /// A Metachatr lambda
+    typedef boost::function<
+            block ( const block &scope, const fostlib::string &name, const fostlib::json &arguments )
+        > lambda;
+
+
     /// This type describes a Metachatr AST in an internal executable form
     class block {
     public:
@@ -26,6 +35,9 @@ namespace metachatr {
 
         /// Stores the JSON representation of the code block
         fostlib::accessors<fostlib::json> json;
+
+        /// Name bindings for evaluating the nested expression
+        std::map<fostlib::string, lambda> bindings;
 
         /// Executes the block and returns the new form
         block operator() (const block &scope);
