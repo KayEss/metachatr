@@ -1,0 +1,24 @@
+# Semantics #
+
+
+## List execution ##
+
+The simplest Metachatr programs are just lists that get evaluated as s-expressions.
+
+    ["+", 2, 3]
+    > 5
+
+
+## Blocks ##
+
+A Metachatr program consists of a number of nested blocks. Each block has two parts, a name binding part and a list part. When a block is evaluated the list part is evaluated as an s-expression with names looked up in the name binding part (and then the parent block).
+
+For example, evaluating the following block gives the value 3:
+
+    {"foo": 3} [foo]
+    > 3
+
+Whilst evaluating this block will result in a name look up error:
+
+    {} [bar]
+    ! Name 'bar' not bound to an expression
