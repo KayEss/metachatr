@@ -11,30 +11,13 @@
 
 
 namespace {
-    /// Execute the top level of the module
-    struct first_level : public boost::static_visitor< metachatr::block > {
-        first_level(const metachatr::block &scope)
-        : scope(scope) {
-        }
-        const metachatr::block &scope;
-
-        metachatr::block operator() (const fostlib::json::atom_t &t) const {
-            throw fostlib::exceptions::not_implemented(
-                "Plus with an atom");
-        }
-        metachatr::block operator() (const fostlib::json::array_t &a) const {
-            return fostlib::json();
-        }
-        metachatr::block operator() (const fostlib::json::object_t &o) const {
-            throw fostlib::exceptions::not_implemented(
-                "Plus with an object");
-        }
-    };
-
     metachatr::block plus(
         const fostlib::string &, const metachatr::block &scope, const fostlib::json &args
     ) {
-        return boost::apply_visitor(first_level(scope), args);
+        double total = 0.0;
+        for ( fostlib::json::const_iterator i(args.begin()); i != args.end(); ++i )
+            total += metachatr::block(*i)(scope).json().get<double>().value(0.0);
+        return fostlib::json(total);
     }
 }
 
