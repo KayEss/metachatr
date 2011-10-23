@@ -24,11 +24,15 @@ metachatr::block::block(const fostlib::json &basic)
 
 namespace {
     metachatr::block eval(const metachatr::block &expr, const metachatr::block &parent);
+
     std::pair<fostlib::json, fostlib::json> list(const fostlib::json::array_t a) {
         std::pair<fostlib::json, fostlib::json> split(
             *a[0], fostlib::json());
+        for ( std::size_t v(1); v < a.size(); ++v )
+            fostlib::push_back(split.second, *a[v]);
         return split;
     }
+
     struct evaluator : public boost::static_visitor< metachatr::block > {
         evaluator(const metachatr::block &myscope)
         : myscope(myscope) {
