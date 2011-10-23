@@ -29,10 +29,8 @@ namespace {
             const metachatr::block &scope, const fostlib::json::array_t a
     ) {
         std::pair<fostlib::json, fostlib::json> split(*a[0], fostlib::json());
-        for ( std::size_t v(1); v < a.size(); ++v ) {
-            metachatr::block arg(fostlib::json(*a[v]));
-            fostlib::push_back(split.second, arg(scope).json());
-        }
+        for ( std::size_t v(1); v < a.size(); ++v )
+            fostlib::push_back(split.second, *a[v]);
         return split;
     }
 
