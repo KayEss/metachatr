@@ -25,11 +25,14 @@ metachatr::block::block(const fostlib::json &basic)
 namespace {
     metachatr::block eval(const metachatr::block &expr, const metachatr::block &parent);
 
-    std::pair<fostlib::json, fostlib::json> list(const fostlib::json::array_t a) {
-        std::pair<fostlib::json, fostlib::json> split(
-            *a[0], fostlib::json());
-        for ( std::size_t v(1); v < a.size(); ++v )
-            fostlib::push_back(split.second, *a[v]);
+    std::pair<fostlib::json, fostlib::json> list(
+            const metachatr::block &scope, const fostlib::json::array_t a
+    ) {
+        std::pair<fostlib::json, fostlib::json> split(*a[0], fostlib::json());
+        for ( std::size_t v(1); v < a.size(); ++v ) {
+            metachatr::block arg(fostlib::json(*a[v]));
+            fostlib::push_back(split.second, arg(scope).json());
+        }
         return split;
     }
 
@@ -43,7 +46,7 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            std::pair<fostlib::json, fostlib::json> sexpr(list(a));
+            std::pair<fostlib::json, fostlib::json> sexpr(list(myscope, a));
             fostlib::string fn_name = fostlib::coerce<fostlib::string>(
                 eval(sexpr.first, myscope).json());
             std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(

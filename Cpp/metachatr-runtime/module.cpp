@@ -49,9 +49,6 @@ namespace {
             for ( std::size_t p(0); p != a.size(); ++p ) {
                 list_exec op(module, seen_list);
                 seen_list = boost::apply_visitor(op, *a[p]);
-//                 metachatr::block section(*a[p]);
-//                 metachatr::block evaled(section(module));
-//                 fostlib::push_back(module.json(), evaled.json());
             }
             return module;
         }
