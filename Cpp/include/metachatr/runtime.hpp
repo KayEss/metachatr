@@ -53,8 +53,8 @@ namespace metachatr {
             block &b; fostlib::string n;
             friend class block;
         public:
-            /// Allow a new JSON processing function to be
-            void operator= ( boost::function< fostlib::json ( const fostlib::json &args ) > fn );
+            /// Bind a lambda
+            void operator= ( lambda fn );
         };
 
         /// Allow a function that just takes some JSON to be bound to a name
@@ -64,6 +64,16 @@ namespace metachatr {
 
     /// Take the file contents and produce the ready-to-execute AST representation
     block filehandler(const boost::filesystem::wpath &location);
+
+
+    /// The Metachatr standard library
+    namespace lib {
+
+        /// Execute a module
+        lambda module();
+
+
+    }
 
 
 }

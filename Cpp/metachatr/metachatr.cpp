@@ -11,9 +11,10 @@
 
 
 namespace {
-    fostlib::json echo(fostlib::ostream &out, const fostlib::json &js) {
-        out << fostlib::json::unparse(js, true) << std::endl;
-        return js;
+    fostlib::json echo(fostlib::ostream &out,
+            const fostlib::string &, const metachatr::block &, const fostlib::json &args) {
+        out << fostlib::json::unparse(args, true) << std::endl;
+        return args;
     }
 }
 
@@ -26,12 +27,15 @@ FSL_MAIN(
     // Build the block that describes the builtin functions
     metachatr::block builtins;
     builtins["echo"] = boost::lambda::bind(
-        echo, boost::ref(out), boost::lambda::_1);
+        echo, boost::ref(out), boost::lambda::_1, boost::lambda::_2, boost::lambda::_3);
+    builtins["module"] = metachatr::lib::module();
     // Load the file and print out the stream
     fostlib::json ast = metachatr::filehandler(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
+    // Execute the code in the AST
     metachatr::block code(ast);
-    fostlib::json result = code(builtins).json();
-    out << fostlib::json::unparse(result, true) << std::endl;
+    metachatr::block result = code(builtins);
+    // Print the resultant JSON (for now)
+    out << fostlib::json::unparse(result.json(), true) << std::endl;
     return 0;
 }

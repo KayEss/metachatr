@@ -80,17 +80,6 @@ metachatr::block::binding_proxy::binding_proxy(block &b, const fostlib::string &
 : b(b), n(n) {
 }
 
-namespace {
-    fostlib::json fn_wrapper(
-        boost::function< fostlib::json ( const fostlib::json &args ) > fn,
-        const fostlib::string &, const metachatr::block &, const fostlib::json &arguments
-    ) {
-        return fn(arguments);
-    }
-}
-void metachatr::block::binding_proxy::operator= (
-    boost::function< fostlib::json ( const fostlib::json &args ) > fn
-) {
-    b.bindings()[n] = boost::lambda::bind(fn_wrapper, fn,
-        boost::lambda::_1, boost::lambda::_2, boost::lambda::_3);
+void metachatr::block::binding_proxy::operator= (metachatr::lambda fn) {
+    b.bindings()[n] =fn;
 }
