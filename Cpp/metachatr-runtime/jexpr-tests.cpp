@@ -14,6 +14,14 @@
 FSL_TEST_SUITE( sexpr );
 
 
+FSL_TEST_FUNCTION( atom ) {
+    fostlib::json plain(34);
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.first, fostlib::json());
+    FSL_CHECK_EQ(expr.second, fostlib::json(34));
+}
+
 FSL_TEST_FUNCTION( basic_list ) {
     fostlib::json plain;
     fostlib::push_back(plain, "fn");

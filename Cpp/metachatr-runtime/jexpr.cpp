@@ -11,11 +11,25 @@
 #include <metachatr/jexpr.hpp>
 
 
-metachatr::jexpression metachatr::build_jexpression(
-    const fostlib::json &a
-) {
-    metachatr::jexpression split(a[0], fostlib::json());
-    for ( std::size_t v(1); v < a.size(); ++v )
-        fostlib::push_back(split.second, a[v]);
-    return split;
+namespace {
+    struct builder : public boost::static_visitor< metachatr::jexpression > {
+        metachatr::jexpression operator() ( const fostlib::json::atom_t &t ) const {
+            return std::make_pair(fostlib::json(), fostlib::json(t));
+        }
+        metachatr::jexpression operator() ( const fostlib::json::array_t &a ) const {
+            metachatr::jexpression split(*a[0], fostlib::json());
+            for ( std::size_t v(1); v < a.size(); ++v )
+                fostlib::push_back(split.second, *a[v]);
+            return split;
+        }
+        metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
+            throw fostlib::exceptions::not_implemented(
+                "J-expression builder from an object");
+        }
+    };
+}
+
+
+metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
+    return boost::apply_visitor(builder(), a);
 }
