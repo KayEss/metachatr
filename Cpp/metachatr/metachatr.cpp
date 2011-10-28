@@ -7,7 +7,7 @@
 
 
 #include <fost/main>
-#include <metachatr/runtime>
+#include <metachatr/parser>
 
 
 namespace {

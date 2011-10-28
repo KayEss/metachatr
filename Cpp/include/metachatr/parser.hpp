@@ -12,6 +12,7 @@
 
 
 #include <fost/core>
+#include <metachatr/runtime>
 
 
 namespace metachatr {
@@ -19,6 +20,10 @@ namespace metachatr {
 
     /// A simple recursive parser for .metachatr files
     fostlib::json parse(const fostlib::string &);
+
+
+    /// Take the file contents and produce the ready-to-execute AST representation
+    block filehandler(const boost::filesystem::wpath &location);
 
 
 }

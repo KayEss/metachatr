@@ -3,4 +3,5 @@ fost-lib-autotest metachatr-file
     :
         Cpp/metachatr-file
     :
+        ../metachatr-runtime
     ;
