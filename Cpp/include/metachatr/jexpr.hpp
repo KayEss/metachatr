@@ -23,12 +23,24 @@ namespace metachatr {
         class jexpression_impl;
     }
 
+
     /// The j-expression as it is manipulated by the rest of the code
     typedef boost::shared_ptr< detail::jexpression_impl > jexpression;
 
 
+    namespace detail {
+        class lambda_impl {
+        public:
+            virtual ~lambda_impl();
+            virtual jexpression operator() (jexpression) = 0;
+        };
+    }
+    /// A simple lambda type to start with
+    typedef boost::shared_ptr< detail::lambda_impl > lambda;
+
+
     /// The name bindings for a j-expression
-    typedef std::map< fostlib::string, jexpression > context;
+    typedef std::map< fostlib::string, lambda > context;
 
     /// The list of arguments to an expression
     typedef std::vector< jexpression > argument_tuple;
@@ -37,15 +49,18 @@ namespace metachatr {
     namespace detail {
         /// Describes a j-expression
         class jexpression_impl : boost::noncopyable {
+            boost::shared_ptr<context> m_bindings;
         public:
             /// Construct a j-expression value
             jexpression_impl(const fostlib::json &value);
             /// Construct a j-expression
-            jexpression_impl(const context &, const fostlib::json &function,
+            jexpression_impl(
+                boost::shared_ptr< context >,
+                const fostlib::json &function,
                 const argument_tuple &arguments);
 
             /// Name bindings used within the context of evaluating the expression
-            fostlib::accessors< context > bindings;
+            const context &bindings() const;
             /// The expression that describes the function
             fostlib::accessors< fostlib::json > function;
             /// Arguments to the function that is executed

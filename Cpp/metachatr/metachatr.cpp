@@ -16,7 +16,7 @@ FSL_MAIN(
         L"Copyright (c) 2009-2011 Kirit Saelensminde."
 )( fostlib::ostream &out, fostlib::arguments &args ) {
     // Build the block that describes the builtin functions
-    metachatr::scope builtins;
+    metachatr::context builtins;
     builtins["module"] = metachatr::lib::module();
 //     builtins["+"] = metachatr::lib::plus();
 //     // Load the file

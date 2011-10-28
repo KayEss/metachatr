@@ -19,16 +19,10 @@
 namespace metachatr {
 
 
-    /// A simple typedef lambda type to start with
-    typedef boost::function< jexpression ( jexpression ) > lambda;
-
-
-    /// Implements a scope
-    typedef std::map<fostlib::string, lambda> scope;
-
-
-    /// Executes an expression
-    jexpression eval(const scope &s, jexpression expr);
+    /// Return a lambda which can be evaluated at any time
+    lambda eval(
+        boost::shared_ptr<metachatr::context> closure,
+        jexpression expression);
 
 
     /// The Metachatr standard library

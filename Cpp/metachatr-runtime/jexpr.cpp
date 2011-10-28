@@ -10,6 +10,7 @@
 #include <fost/push_back>
 #include <fost/string>
 #include <metachatr/jexpr.hpp>
+#include <metachatr/runtime.hpp>
 
 
 namespace {
@@ -24,13 +25,15 @@ namespace {
                 args.push_back(metachatr::build_jexpression(*a[v]));
             return metachatr::jexpression(
                 new metachatr::detail::jexpression_impl(
-                    metachatr::context(), *a[0], args));
+                    boost::shared_ptr<metachatr::context>(), *a[0], args));
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
-            metachatr::context bindings;
+            boost::shared_ptr<metachatr::context> bindings(
+                new metachatr::context);;
             for ( fostlib::json::object_t::const_iterator i(o.begin()); i != o.end(); ++i )
                 if ( !i->first.empty() )
-                    bindings[i->first] = metachatr::build_jexpression(*i->second);
+                    (*bindings)[i->first] = metachatr::eval(
+                        bindings, metachatr::build_jexpression(*i->second));
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
                 return metachatr::jexpression(
@@ -53,10 +56,15 @@ metachatr::detail::jexpression_impl::jexpression_impl(
 }
 
 metachatr::detail::jexpression_impl::jexpression_impl(
-    const context &b, const fostlib::json &f, const argument_tuple &a
-) : bindings(b), function(f), arguments(a) {
+    boost::shared_ptr< context > b, const fostlib::json &f, const argument_tuple &a
+) : m_bindings(b), function(f), arguments(a) {
 }
 
 metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
     return boost::apply_visitor(builder(), a);
 }
+
+const metachatr::context &metachatr::detail::jexpression_impl::bindings() const {
+    return *m_bindings;
+}
+

@@ -63,7 +63,9 @@ FSL_TEST_FUNCTION( object_with_member ) {
     fostlib::insert(plain, "key", true);
 
     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-    FSL_CHECK_EQ(expr->bindings().find("key")->second->value(), fostlib::json(true));
+    FSL_CHECK_EQ(
+        (*expr->bindings().find("key")->second)(metachatr::jexpression())->value(),
+        fostlib::json(true));
     FSL_CHECK_EQ(expr->function(), fostlib::json());
     FSL_CHECK_EQ(expr->arguments(), metachatr::argument_tuple());
     FSL_CHECK_EQ(expr->value(), fostlib::json());
@@ -79,6 +81,8 @@ FSL_TEST_FUNCTION( object_with_member_and_code ) {
     FSL_CHECK_EQ(expr->function(), fostlib::json("fn"));
     FSL_CHECK_EQ(expr->arguments().size(), 1u);
     FSL_CHECK_EQ(expr->arguments()[0]->value(), fostlib::json("key"));
-    FSL_CHECK_EQ(expr->bindings().find("key")->second->value(), fostlib::json(true));
+    FSL_CHECK_EQ(
+        (*expr->bindings().find("key")->second)(metachatr::jexpression())->value(),
+        fostlib::json(true));
     FSL_CHECK_EQ(expr->value(), fostlib::json());
 }

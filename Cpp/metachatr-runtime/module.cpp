@@ -58,12 +58,16 @@ namespace {
 //         }
 //     };
 
-    metachatr::jexpression module(metachatr::jexpression expr) {
-        throw fostlib::exceptions::not_implemented("module.cpp");
-        //return boost::apply_visitor(first_level(scope), args);
-    }
+    class module_impl : public metachatr::detail::lambda_impl {
+        metachatr::jexpression operator() (metachatr::jexpression expr) {
+            throw fostlib::exceptions::not_implemented("module.cpp");
+            //return boost::apply_visitor(first_level(scope), args);
+        }
+    };
+    boost::shared_ptr< metachatr::detail::lambda_impl >
+        c_module_impl( new module_impl );
 }
 
 metachatr::lambda metachatr::lib::module() {
-    return ::module;
+    return c_module_impl;
 }
