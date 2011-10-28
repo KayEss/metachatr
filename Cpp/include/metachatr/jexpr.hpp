@@ -48,4 +48,11 @@ namespace metachatr {
 }
 
 
+/// Pretty print the expression
+fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::jexpression & );
+
+/// Pretty print a binding context
+fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::context & );
+
+
 #endif // METACHATR_JEXPR_HPP
