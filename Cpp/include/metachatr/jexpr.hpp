@@ -26,7 +26,7 @@ namespace metachatr {
 
 
     /// Describes a j-expression
-    typedef class jexpression {
+    class jexpression {
     public:
         /// Construct a j-expression
         jexpression(const context &, const fostlib::json &function,
@@ -38,7 +38,7 @@ namespace metachatr {
         fostlib::accessors< fostlib::json > function;
         /// Arguments to the function that is executed
         fostlib::accessors< fostlib::json > arguments;
-    } jexpression;
+    };
 
 
     /// Build the parts of a j-expression from a JSON structure
