@@ -15,19 +15,20 @@
 namespace {
     struct builder : public boost::static_visitor< metachatr::jexpression > {
         metachatr::jexpression operator() ( const fostlib::json::atom_t &t ) const {
-            return metachatr::jexpression(fostlib::json(), fostlib::json(), fostlib::json(t));
+            return metachatr::jexpression(metachatr::context(), fostlib::json(), fostlib::json(t));
         }
         metachatr::jexpression operator() ( const fostlib::json::array_t &a ) const {
             fostlib::json args;
             for ( std::size_t v(1); v < a.size(); ++v )
                 fostlib::push_back(args, *a[v]);
-            return metachatr::jexpression(fostlib::json(), *a[0], args);
+            return metachatr::jexpression(metachatr::context(), *a[0], args);
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
-            fostlib::json bindings;
+            metachatr::context bindings;
             for ( fostlib::json::object_t::const_iterator i(o.begin()); i != o.end(); ++i )
                 if ( !i->first.empty() )
-                    fostlib::insert(bindings, i->first, *i->second);
+                    bindings[i->first] = boost::shared_ptr<metachatr::jexpression>(
+                        new metachatr::jexpression(metachatr::context(), fostlib::json(), *i->second));
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
                 return metachatr::jexpression(bindings, fostlib::json(), fostlib::json());
@@ -41,7 +42,7 @@ namespace {
 
 
 metachatr::jexpression::jexpression(
-    const fostlib::json &b, const fostlib::json &f, const fostlib::json &a
+    const context &b, const fostlib::json &f, const fostlib::json &a
 ) : bindings(b), function(f), arguments(a) {
 }
 

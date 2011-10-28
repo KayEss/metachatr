@@ -18,14 +18,22 @@ namespace metachatr {
 
 
     /// Describes a j-expression
+    class jexpression;
+
+
+    /// The name bindings for a j-expression
+    typedef std::map< fostlib::string, boost::shared_ptr< jexpression > > context;
+
+
+    /// Describes a j-expression
     typedef class jexpression {
     public:
         /// Construct a j-expression
-        jexpression(const fostlib::json &bindings, const fostlib::json &function,
+        jexpression(const context &, const fostlib::json &function,
             const fostlib::json &arguments);
 
         /// Name bindings used within the context of evaluating the expression
-        fostlib::accessors< fostlib::json > bindings;
+        fostlib::accessors< context > bindings;
         /// The expression that describes the function
         fostlib::accessors< fostlib::json > function;
         /// Arguments to the function that is executed
