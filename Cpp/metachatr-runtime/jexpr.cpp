@@ -6,6 +6,7 @@
 */
 
 
+#include <fost/insert>
 #include <fost/push_back>
 #include <fost/string>
 #include <metachatr/jexpr.hpp>
@@ -23,11 +24,17 @@ namespace {
             return metachatr::jexpression(*a[0], fostlib::json(), args);
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
+            fostlib::json bindings;
+            for ( fostlib::json::object_t::const_iterator i(o.begin()); i != o.end(); ++i )
+                if ( !i->first.empty() )
+                    fostlib::insert(bindings, i->first, *i->second);
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
-                return metachatr::jexpression(fostlib::json(), o, fostlib::json());
-            else
-                return metachatr::build_jexpression(*p->second);
+                return metachatr::jexpression(fostlib::json(), bindings, fostlib::json());
+            else {
+                metachatr::jexpression expr(metachatr::build_jexpression(*p->second));
+                return metachatr::jexpression(expr.function(), bindings, expr.arguments());
+            }
         }
     };
 }
