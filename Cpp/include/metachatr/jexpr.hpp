@@ -18,7 +18,18 @@ namespace metachatr {
 
 
     /// Describes an s-expression
-    typedef std::pair<fostlib::json, fostlib::json> jexpression;
+    typedef struct jexpression {
+        /// The expression that describes the function
+        fostlib::json function;
+        /// Name bindings used within the context of evaluating the expression
+        fostlib::json bindings;
+        /// Arguments to the function that is executed
+        fostlib::json arguments;
+
+        /// Construct a jexpression
+        jexpression(const fostlib::json &function, const fostlib::json &bindings,
+            const fostlib::json &arguments);
+    } jexpression;
 
 
     /// Build the two parts of an s-expression from a JSON structure
