@@ -17,33 +17,36 @@
 namespace metachatr {
 
 
-    /// Describes the storage of a j-expression
-    class jexpression_impl;
-
+    /// Private members of metachatr
+    namespace detail {
+        /// Describes the storage of a j-expression
+        class jexpression_impl;
+    }
 
     /// The j-expression as it is manipulated by the rest of the code
-    typedef boost::shared_ptr< jexpression_impl > jexpression;
+    typedef boost::shared_ptr< detail::jexpression_impl > jexpression;
 
 
     /// The name bindings for a j-expression
     typedef std::map< fostlib::string, jexpression > context;
 
 
-    /// Describes a j-expression
-    class jexpression_impl : boost::noncopyable {
-    public:
-        /// Construct a j-expression
-        jexpression_impl(const context &, const fostlib::json &function,
-            const fostlib::json &arguments);
+    namespace detail {
+        /// Describes a j-expression
+        class jexpression_impl : boost::noncopyable {
+        public:
+            /// Construct a j-expression
+            jexpression_impl(const context &, const fostlib::json &function,
+                const fostlib::json &arguments);
 
-        /// Name bindings used within the context of evaluating the expression
-        fostlib::accessors< context > bindings;
-        /// The expression that describes the function
-        fostlib::accessors< fostlib::json > function;
-        /// Arguments to the function that is executed
-        fostlib::accessors< fostlib::json > arguments;
-    };
-
+            /// Name bindings used within the context of evaluating the expression
+            fostlib::accessors< context > bindings;
+            /// The expression that describes the function
+            fostlib::accessors< fostlib::json > function;
+            /// Arguments to the function that is executed
+            fostlib::accessors< fostlib::json > arguments;
+        };
+    }
 
     /// Build the parts of a j-expression from a JSON structure
     jexpression build_jexpression(const fostlib::json &);
