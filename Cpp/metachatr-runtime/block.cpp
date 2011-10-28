@@ -6,6 +6,7 @@
 */
 
 
+#include <metachatr/parser>
 #include <metachatr/runtime.hpp>
 #include <boost/lambda/bind.hpp>
 
@@ -25,15 +26,6 @@ metachatr::block::block(const fostlib::json &basic)
 namespace {
     metachatr::block eval(const metachatr::block &expr, const metachatr::block &parent);
 
-    std::pair<fostlib::json, fostlib::json> list(
-            const metachatr::block &scope, const fostlib::json::array_t a
-    ) {
-        std::pair<fostlib::json, fostlib::json> split(*a[0], fostlib::json());
-        for ( std::size_t v(1); v < a.size(); ++v )
-            fostlib::push_back(split.second, *a[v]);
-        return split;
-    }
-
     struct evaluator : public boost::static_visitor< metachatr::block > {
         evaluator(const metachatr::block &myscope)
         : myscope(myscope) {
@@ -44,7 +36,7 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            std::pair<fostlib::json, fostlib::json> sexpr(list(myscope, a));
+            std::pair<fostlib::json, fostlib::json> sexpr(metachatr::build_sexpression(a));
             fostlib::string fn_name = fostlib::coerce<fostlib::string>(
                 eval(sexpr.first, myscope).json());
             std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(

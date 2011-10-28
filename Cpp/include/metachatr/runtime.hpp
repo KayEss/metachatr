@@ -34,6 +34,7 @@ namespace metachatr {
         block();
 
         /// Build an executable block from a JSON representation
+        //block(const fostlib::json &name, const fostlib::json &arguments);
         block(const fostlib::json &);
 
         /// Stores the JSON representation of the code block
