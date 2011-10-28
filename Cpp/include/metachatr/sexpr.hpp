@@ -21,9 +21,8 @@ namespace metachatr {
     typedef std::pair<fostlib::json, fostlib::json> sexpression;
 
 
-    /// Build the two parts of an s-expression from a JSON list
-    sexpression build_sexpression(
-        const fostlib::json::array_t a);
+    /// Build the two parts of an s-expression from a JSON structure
+    sexpression build_sexpression(const fostlib::json &);
 
 
 }

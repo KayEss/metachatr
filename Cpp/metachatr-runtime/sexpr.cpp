@@ -12,10 +12,10 @@
 
 
 metachatr::sexpression metachatr::build_sexpression(
-    const fostlib::json::array_t a
+    const fostlib::json &a
 ) {
-    std::pair<fostlib::json, fostlib::json> split(*a[0], fostlib::json());
+    std::pair<fostlib::json, fostlib::json> split(a[0], fostlib::json());
     for ( std::size_t v(1); v < a.size(); ++v )
-        fostlib::push_back(split.second, *a[v]);
+        fostlib::push_back(split.second, a[v]);
     return split;
 }
