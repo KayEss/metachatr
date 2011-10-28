@@ -16,9 +16,9 @@ FSL_MAIN(
         L"Copyright (c) 2009-2011 Kirit Saelensminde."
 )( fostlib::ostream &out, fostlib::arguments &args ) {
     // Build the block that describes the builtin functions
-//     metachatr::block builtins;
+    metachatr::scope builtins;
+    builtins["module"] = metachatr::lib::module();
 //     builtins["+"] = metachatr::lib::plus();
-//     builtins["module"] = metachatr::lib::module();
 //     // Load the file
 //     fostlib::json ast = metachatr::filehandler(
 //         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
