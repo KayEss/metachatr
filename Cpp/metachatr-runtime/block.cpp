@@ -37,7 +37,7 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            metachatr::jexpression jexpr(metachatr::build_jexpression(a));
+            metachatr::jexpression_impl jexpr(metachatr::build_jexpression(a));
             fostlib::string fn_name = fostlib::coerce<fostlib::string>(
                 eval(jexpr.function(), myscope).json());
             std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(
