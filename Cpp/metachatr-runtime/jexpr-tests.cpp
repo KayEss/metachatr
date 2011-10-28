@@ -18,9 +18,9 @@ FSL_TEST_FUNCTION( empty ) {
     fostlib::json plain;
 
     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-    FSL_CHECK_EQ(expr.function, fostlib::json());
-    FSL_CHECK_EQ(expr.bindings, fostlib::json());
-    FSL_CHECK_EQ(expr.arguments, fostlib::json());
+    FSL_CHECK_EQ(expr.function(), fostlib::json());
+    FSL_CHECK_EQ(expr.bindings(), fostlib::json());
+    FSL_CHECK_EQ(expr.arguments(), fostlib::json());
 }
 
 

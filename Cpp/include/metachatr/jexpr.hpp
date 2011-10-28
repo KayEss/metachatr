@@ -20,11 +20,11 @@ namespace metachatr {
     /// Describes an s-expression
     typedef struct jexpression {
         /// The expression that describes the function
-        fostlib::json function;
+        fostlib::accessors< fostlib::json > function;
         /// Name bindings used within the context of evaluating the expression
-        fostlib::json bindings;
+        fostlib::accessors< fostlib::json > bindings;
         /// Arguments to the function that is executed
-        fostlib::json arguments;
+        fostlib::accessors< fostlib::json > arguments;
 
         /// Construct a jexpression
         jexpression(const fostlib::json &function, const fostlib::json &bindings,

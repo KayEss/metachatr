@@ -17,10 +17,10 @@ namespace {
             return metachatr::jexpression(fostlib::json(), fostlib::json(), fostlib::json(t));
         }
         metachatr::jexpression operator() ( const fostlib::json::array_t &a ) const {
-            metachatr::jexpression split(*a[0], fostlib::json(), fostlib::json());
+            fostlib::json args;
             for ( std::size_t v(1); v < a.size(); ++v )
-                fostlib::push_back(split.arguments, *a[v]);
-            return split;
+                fostlib::push_back(args, *a[v]);
+            return metachatr::jexpression(*a[0], fostlib::json(), args);
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
