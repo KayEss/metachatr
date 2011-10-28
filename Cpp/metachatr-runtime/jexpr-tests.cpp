@@ -32,3 +32,11 @@ FSL_TEST_FUNCTION( basic_list ) {
     FSL_CHECK_EQ(expr.second.size(), 1u);
     FSL_CHECK_EQ(expr.second[0], fostlib::json(34));
 }
+
+FSL_TEST_FUNCTION( empty_object ) {
+    fostlib::json plain = (fostlib::json::object_t());
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.first, fostlib::json());
+    FSL_CHECK_EQ(expr.second, fostlib::json(fostlib::json::object_t()));
+}

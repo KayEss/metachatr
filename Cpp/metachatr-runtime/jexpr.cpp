@@ -14,7 +14,7 @@
 namespace {
     struct builder : public boost::static_visitor< metachatr::jexpression > {
         metachatr::jexpression operator() ( const fostlib::json::atom_t &t ) const {
-            return std::make_pair(fostlib::json(), fostlib::json(t));
+            return std::make_pair(fostlib::json(), t);
         }
         metachatr::jexpression operator() ( const fostlib::json::array_t &a ) const {
             metachatr::jexpression split(*a[0], fostlib::json());
@@ -23,8 +23,11 @@ namespace {
             return split;
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
-            throw fostlib::exceptions::not_implemented(
-                "J-expression builder from an object");
+            fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
+            if ( p == o.end() )
+                return std::make_pair(fostlib::json(), o);
+            else
+                return metachatr::build_jexpression(*p->second);
         }
     };
 }
