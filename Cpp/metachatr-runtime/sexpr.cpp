@@ -8,7 +8,7 @@
 
 #include <fost/push_back>
 #include <fost/string>
-#include <metachatr/parser.hpp>
+#include <metachatr/runtime.hpp>
 
 
 std::pair<fostlib::json, fostlib::json> metachatr::build_sexpression(
