@@ -37,14 +37,14 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            metachatr::jexpression_impl jexpr(metachatr::build_jexpression(a));
+            metachatr::jexpression jexpr(metachatr::build_jexpression(a));
             fostlib::string fn_name = fostlib::coerce<fostlib::string>(
-                eval(jexpr.function(), myscope).json());
+                eval(jexpr->function(), myscope).json());
             std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(
                 myscope.bindings().find(fn_name));
             if ( lambda_p  == myscope.bindings().end() )
                 throw fostlib::exceptions::not_implemented("Name not bound", fn_name);
-            return lambda_p->second(fn_name, myscope, jexpr.arguments());
+            return lambda_p->second(fn_name, myscope, jexpr->arguments());
         }
         metachatr::block operator() (const fostlib::json::object_t &o) const {
             return fostlib::json(o);

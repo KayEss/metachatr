@@ -17,16 +17,20 @@
 namespace metachatr {
 
 
-    /// Describes a j-expression
+    /// Describes the storage of a j-expression
     class jexpression_impl;
 
 
+    /// The j-expression as it is manipulated by the rest of the code
+    typedef boost::shared_ptr< jexpression_impl > jexpression;
+
+
     /// The name bindings for a j-expression
-    typedef std::map< fostlib::string, boost::shared_ptr< jexpression_impl > > context;
+    typedef std::map< fostlib::string, jexpression > context;
 
 
     /// Describes a j-expression
-    class jexpression_impl {
+    class jexpression_impl : boost::noncopyable {
     public:
         /// Construct a j-expression
         jexpression_impl(const context &, const fostlib::json &function,
@@ -42,14 +46,14 @@ namespace metachatr {
 
 
     /// Build the parts of a j-expression from a JSON structure
-    jexpression_impl build_jexpression(const fostlib::json &);
+    jexpression build_jexpression(const fostlib::json &);
 
 
 }
 
 
 /// Pretty print the expression
-fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::jexpression_impl & );
+fostlib::ostream &operator << ( fostlib::ostream &, metachatr::jexpression );
 
 /// Pretty print a binding context
 fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::context & );
