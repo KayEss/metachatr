@@ -30,21 +30,28 @@ namespace metachatr {
     /// The name bindings for a j-expression
     typedef std::map< fostlib::string, jexpression > context;
 
+    /// The list of arguments to an expression
+    typedef std::vector< jexpression > argument_tuple;
+
 
     namespace detail {
         /// Describes a j-expression
         class jexpression_impl : boost::noncopyable {
         public:
+            /// Construct a j-expression value
+            jexpression_impl(const fostlib::json &value);
             /// Construct a j-expression
             jexpression_impl(const context &, const fostlib::json &function,
-                const fostlib::json &arguments);
+                const argument_tuple &arguments);
 
             /// Name bindings used within the context of evaluating the expression
             fostlib::accessors< context > bindings;
             /// The expression that describes the function
             fostlib::accessors< fostlib::json > function;
             /// Arguments to the function that is executed
-            fostlib::accessors< fostlib::json > arguments;
+            fostlib::accessors< argument_tuple > arguments;
+            /// The value of the j-expression
+            fostlib::accessors< fostlib::json > value;
         };
     }
 
