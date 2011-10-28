@@ -23,7 +23,7 @@ json metachatr::parse(const string &s) {
         if ( t != '\n' && p == '\n' && (t == ' ') != (block[0] == ' ') ) {
             if ( block[0] == ' ' )
                 push_back(ast, json::parse(block));
-            else
+            else if ( !block.empty() && !fostlib::trim(block).isnull() )
                 push_back(ast, block);
             block = string();
         }
@@ -31,6 +31,7 @@ json metachatr::parse(const string &s) {
             block += t;
         p = t;
     }
-    push_back(ast, block);
+    if ( !block.empty() && !fostlib::trim(block).isnull() )
+        push_back(ast, block);
     return ast;
 }
