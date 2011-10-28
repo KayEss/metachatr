@@ -19,17 +19,25 @@
 namespace metachatr {
 
 
-//     /// The Metachatr standard library
-//     namespace lib {
-//
-//         /// Execute a module
-//         lambda module();
-//
-//         /// Add numbers
-//         lambda plus();
-//
-//
-//     }
+    /// A simple typedef lambda type to start with
+    typedef boost::function< jexpression ( jexpression ) > lambda;
+
+
+    /// Implements a scope
+    typedef std::map<fostlib::string, lambda> scope;
+
+
+    /// The Metachatr standard library
+    namespace lib {
+
+        /// Execute a module
+        lambda module();
+
+        /// Add numbers
+        lambda plus();
+
+
+    }
 
 
 }
