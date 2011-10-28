@@ -11,7 +11,7 @@
 #include <fost/test>
 
 
-FSL_TEST_SUITE( sexpr );
+FSL_TEST_SUITE( jexpr );
 
 
 FSL_TEST_FUNCTION( atom ) {
