@@ -8,6 +8,7 @@
 
 #include <metachatr/parser>
 #include <metachatr/runtime.hpp>
+#include <metachatr/sexpr.hpp>
 #include <boost/lambda/bind.hpp>
 
 

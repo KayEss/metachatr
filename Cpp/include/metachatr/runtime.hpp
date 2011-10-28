@@ -18,11 +18,6 @@
 namespace metachatr {
 
 
-    /// Build the two parts of an s-expression from a JSON list
-    std::pair<fostlib::json, fostlib::json> build_sexpression(
-        const fostlib::json::array_t a);
-
-
     class block;
 
 

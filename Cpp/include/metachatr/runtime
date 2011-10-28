@@ -12,6 +12,7 @@
 
 
 #include <metachatr/runtime.hpp>
+#include <metachatr/sexpr.hpp>
 
 
 #endif // METACHATR_RUNTIME

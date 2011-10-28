@@ -8,10 +8,10 @@
 
 #include <fost/push_back>
 #include <fost/string>
-#include <metachatr/runtime.hpp>
+#include <metachatr/sexpr.hpp>
 
 
-std::pair<fostlib::json, fostlib::json> metachatr::build_sexpression(
+metachatr::sexpression metachatr::build_sexpression(
     const fostlib::json::array_t a
 ) {
     std::pair<fostlib::json, fostlib::json> split(*a[0], fostlib::json());
