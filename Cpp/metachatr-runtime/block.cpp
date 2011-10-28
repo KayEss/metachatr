@@ -7,8 +7,8 @@
 
 
 #include <metachatr/parser>
+#include <metachatr/jexpr.hpp>
 #include <metachatr/runtime.hpp>
-#include <metachatr/sexpr.hpp>
 #include <boost/lambda/bind.hpp>
 
 
@@ -37,14 +37,14 @@ namespace {
             return fostlib::json(t);
         }
         metachatr::block operator() (const fostlib::json::array_t &a) const {
-            std::pair<fostlib::json, fostlib::json> sexpr(metachatr::build_sexpression(a));
+            std::pair<fostlib::json, fostlib::json> jexpr(metachatr::build_jexpression(a));
             fostlib::string fn_name = fostlib::coerce<fostlib::string>(
-                eval(sexpr.first, myscope).json());
+                eval(jexpr.first, myscope).json());
             std::map<fostlib::string, metachatr::lambda>::const_iterator lambda_p(
                 myscope.bindings().find(fn_name));
             if ( lambda_p  == myscope.bindings().end() )
                 throw fostlib::exceptions::not_implemented("Name not bound", fn_name);
-            return lambda_p->second(fn_name, myscope, sexpr.second);
+            return lambda_p->second(fn_name, myscope, jexpr.second);
         }
         metachatr::block operator() (const fostlib::json::object_t &o) const {
             return fostlib::json(o);

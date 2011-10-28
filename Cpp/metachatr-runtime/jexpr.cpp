@@ -8,13 +8,13 @@
 
 #include <fost/push_back>
 #include <fost/string>
-#include <metachatr/sexpr.hpp>
+#include <metachatr/jexpr.hpp>
 
 
-metachatr::sexpression metachatr::build_sexpression(
+metachatr::jexpression metachatr::build_jexpression(
     const fostlib::json &a
 ) {
-    std::pair<fostlib::json, fostlib::json> split(a[0], fostlib::json());
+    metachatr::jexpression split(a[0], fostlib::json());
     for ( std::size_t v(1); v < a.size(); ++v )
         fostlib::push_back(split.second, a[v]);
     return split;

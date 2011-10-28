@@ -19,7 +19,7 @@ FSL_TEST_FUNCTION( basic_list ) {
     fostlib::push_back(plain, "fn");
     fostlib::push_back(plain, 34);
 
-    metachatr::sexpression expr = metachatr::build_sexpression(plain);
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
     FSL_CHECK_EQ(expr.first, fostlib::json("fn"));
     FSL_CHECK_EQ(expr.second.size(), 1u);
     FSL_CHECK_EQ(expr.second[0], fostlib::json(34));

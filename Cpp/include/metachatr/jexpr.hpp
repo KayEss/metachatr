@@ -6,8 +6,8 @@
 */
 
 
-#ifndef METACHATR_SEXPR_HPP
-#define METACHATR_SEXPR_HPP
+#ifndef METACHATR_JEXPR_HPP
+#define METACHATR_JEXPR_HPP
 #pragma once
 
 
@@ -18,14 +18,14 @@ namespace metachatr {
 
 
     /// Describes an s-expression
-    typedef std::pair<fostlib::json, fostlib::json> sexpression;
+    typedef std::pair<fostlib::json, fostlib::json> jexpression;
 
 
     /// Build the two parts of an s-expression from a JSON structure
-    sexpression build_sexpression(const fostlib::json &);
+    jexpression build_jexpression(const fostlib::json &);
 
 
 }
 
 
-#endif // METACHATR_SEXPR_HPP
+#endif // METACHATR_JEXPR_HPP
