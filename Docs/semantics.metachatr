@@ -13,12 +13,29 @@ The simplest Metachatr programs are just lists that get evaluated as s-expressio
 
 A Metachatr program consists of a number of nested blocks. Each block has two parts, a name binding part and a list part. When a block is evaluated the list part is evaluated as an s-expression with names looked up in the name binding part (and then the parent block).
 
+The list part is at the location in the object where the empty key is found.
+
 For example, evaluating the following block gives the value 3:
 
-    {"foo": 3} [foo]
+    {"": ["foo"], "foo": 3}
     > 3
 
-Whilst evaluating this block will result in a name look up error:
+Atoms on their own result in that atom. A string does not cause a name look up.
 
-    {} [bar]
-    ! Name 'bar' not bound to an expression
+    3
+    > 3
+
+This returns the string, not the identifier bound to the name.
+
+    "Hello"
+    > "Hello"
+
+To evaluate the name then a s-expression must be used.
+
+    ["Hello"]
+    ! Name 'Hello' not bound to an expression
+
+Arguments can also be passed by name by setting up the same sort of expression
+
+    {"": ["$", "${h} ${w}"], "h": "Hello", "w": "World!"}
+    > "Hello World!"

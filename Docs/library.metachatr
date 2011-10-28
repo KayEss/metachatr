@@ -1,0 +1,11 @@
+# Built in functions #
+
+
+## $ ##
+
+Performs string substitution looking for `${foo}` and substitutes the pretty printed version
+of the expression it finds for `foo` in the bindings.
+
+    { "": ["$", "${h} ${w}"], "h": "Hello", "w": "World!"}
+    > "Hello World!"
+
