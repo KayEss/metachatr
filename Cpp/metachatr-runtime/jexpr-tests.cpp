@@ -24,42 +24,46 @@ FSL_TEST_FUNCTION( empty ) {
 }
 
 
-// FSL_TEST_FUNCTION( atom ) {
-//     fostlib::json plain(34);
-//
-//     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-//     FSL_CHECK_EQ(expr.first, fostlib::json());
-//     FSL_CHECK_EQ(expr.second, fostlib::json(34));
-// }
-//
-// FSL_TEST_FUNCTION( basic_list ) {
-//     fostlib::json plain;
-//     fostlib::push_back(plain, "fn");
-//     fostlib::push_back(plain, 34);
-//
-//     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-//     FSL_CHECK_EQ(expr.first, fostlib::json("fn"));
-//     FSL_CHECK_EQ(expr.second.size(), 1u);
-//     FSL_CHECK_EQ(expr.second[0], fostlib::json(34));
-// }
-//
-// FSL_TEST_FUNCTION( object_with_no_members ) {
-//     fostlib::json plain = (fostlib::json::object_t());
-//
-//     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-//     FSL_CHECK_EQ(expr.first, fostlib::json());
-//     FSL_CHECK_EQ(expr.second, fostlib::json(fostlib::json::object_t()));
-// }
-//
-// FSL_TEST_FUNCTION( object_with_member ) {
-//     fostlib::json plain;
-//     fostlib::insert(plain, "key", true);
-//
-//     metachatr::jexpression expr = metachatr::build_jexpression(plain);
-//     FSL_CHECK_EQ(expr.first, fostlib::json());
-//     FSL_CHECK_EQ(expr.second, plain);
-// }
-//
+FSL_TEST_FUNCTION( atom ) {
+    fostlib::json plain(34);
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.function(), fostlib::json());
+    FSL_CHECK_EQ(expr.bindings(), fostlib::json());
+    FSL_CHECK_EQ(expr.arguments(), fostlib::json(34));
+}
+
+FSL_TEST_FUNCTION( basic_list ) {
+    fostlib::json plain;
+    fostlib::push_back(plain, "fn");
+    fostlib::push_back(plain, 34);
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.function(), fostlib::json("fn"));
+    FSL_CHECK_EQ(expr.bindings(), fostlib::json());
+    FSL_CHECK_EQ(expr.arguments().size(), 1u);
+    FSL_CHECK_EQ(expr.arguments()[0], fostlib::json(34));
+}
+
+FSL_TEST_FUNCTION( object_with_no_members ) {
+    fostlib::json plain = (fostlib::json::object_t());
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.function(), fostlib::json());
+    FSL_CHECK_EQ(expr.bindings(), fostlib::json(fostlib::json::object_t()));
+    FSL_CHECK_EQ(expr.arguments(), fostlib::json());
+}
+
+FSL_TEST_FUNCTION( object_with_member ) {
+    fostlib::json plain;
+    fostlib::insert(plain, "key", true);
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.function(), fostlib::json());
+    FSL_CHECK_EQ(expr.bindings(), plain);
+    FSL_CHECK_EQ(expr.arguments(), fostlib::json());
+}
+
 // FSL_TEST_FUNCTION( object_with_member_and_code ) {
 //     fostlib::json plain;
 //     fostlib::push_back(plain, "", "fn");
