@@ -14,6 +14,14 @@
 FSL_TEST_SUITE( jexpr );
 
 
+FSL_TEST_FUNCTION( empty ) {
+    fostlib::json plain;
+
+    metachatr::jexpression expr = metachatr::build_jexpression(plain);
+    FSL_CHECK_EQ(expr.first, fostlib::json());
+    FSL_CHECK_EQ(expr.second, fostlib::json());
+}
+
 FSL_TEST_FUNCTION( atom ) {
     fostlib::json plain(34);
 
