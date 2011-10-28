@@ -10,10 +10,10 @@
 #include <metachatr/parser>
 
 
-metachatr::block metachatr::filehandler(
+metachatr::jexpression metachatr::filehandler(
     const boost::filesystem::wpath &location
 ) {
     fostlib::string source = fostlib::utf::load_file(location);
-    return metachatr::parse(source);
+    return metachatr::build_jexpression(metachatr::parse(source));
 }
 

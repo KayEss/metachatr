@@ -12,3 +12,10 @@
 fostlib::ostream &operator << ( fostlib::ostream &o, const metachatr::context &c ) {
     return o;
 }
+
+
+fostlib::ostream &operator << (
+    fostlib::ostream &o, const metachatr::argument_tuple &a
+) {
+    return o;
+}

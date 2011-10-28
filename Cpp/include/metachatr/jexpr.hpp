@@ -68,5 +68,8 @@ fostlib::ostream &operator << ( fostlib::ostream &, metachatr::jexpression );
 /// Pretty print a binding context
 fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::context & );
 
+/// Pretty print a binding context
+fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::argument_tuple & );
+
 
 #endif // METACHATR_JEXPR_HPP

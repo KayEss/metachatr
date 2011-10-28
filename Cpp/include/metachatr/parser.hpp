@@ -23,7 +23,7 @@ namespace metachatr {
 
 
     /// Take the file contents and produce the ready-to-execute AST representation
-    block filehandler(const boost::filesystem::wpath &location);
+    jexpression filehandler(const boost::filesystem::wpath &location);
 
 
 }
