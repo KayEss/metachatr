@@ -21,7 +21,7 @@ namespace {
             fostlib::json args;
             for ( std::size_t v(1); v < a.size(); ++v )
                 fostlib::push_back(args, *a[v]);
-            return metachatr::jexpression(*a[0], fostlib::json(), args);
+            return metachatr::jexpression(fostlib::json(), *a[0], args);
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
             fostlib::json bindings;
@@ -30,10 +30,10 @@ namespace {
                     fostlib::insert(bindings, i->first, *i->second);
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
-                return metachatr::jexpression(fostlib::json(), bindings, fostlib::json());
+                return metachatr::jexpression(bindings, fostlib::json(), fostlib::json());
             else {
                 metachatr::jexpression expr(metachatr::build_jexpression(*p->second));
-                return metachatr::jexpression(expr.function(), bindings, expr.arguments());
+                return metachatr::jexpression(bindings, expr.function(), expr.arguments());
             }
         }
     };
@@ -41,8 +41,8 @@ namespace {
 
 
 metachatr::jexpression::jexpression(
-    const fostlib::json &f, const fostlib::json &b, const fostlib::json &a
-) : function(f), bindings(b), arguments(a) {
+    const fostlib::json &b, const fostlib::json &f, const fostlib::json &a
+) : bindings(b), function(f), arguments(a) {
 }
 
 metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
