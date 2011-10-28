@@ -27,6 +27,10 @@ namespace metachatr {
     typedef std::map<fostlib::string, lambda> scope;
 
 
+    /// Executes an expression
+    jexpression eval(const scope &s, jexpression expr);
+
+
     /// The Metachatr standard library
     namespace lib {
 
