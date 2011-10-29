@@ -25,7 +25,7 @@ namespace {
                 args.push_back(metachatr::build_jexpression(*a[v]));
             return metachatr::jexpression(
                 new metachatr::detail::jexpression_impl(
-                    boost::shared_ptr<metachatr::context>(), *a[0], args));
+                    boost::shared_ptr<metachatr::context>(new metachatr::context), *a[0], args));
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
             boost::shared_ptr<metachatr::context> bindings(
@@ -52,7 +52,7 @@ namespace {
 
 metachatr::detail::jexpression_impl::jexpression_impl(
     const fostlib::json &v
-) : value(v) {
+) : m_bindings(new context), value(v) {
 }
 
 metachatr::detail::jexpression_impl::jexpression_impl(
