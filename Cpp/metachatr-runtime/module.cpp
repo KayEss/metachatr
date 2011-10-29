@@ -59,7 +59,7 @@ namespace {
 //     };
 
     class module_impl : public metachatr::detail::lambda_impl {
-        metachatr::jexpression operator() (metachatr::jexpression expr) {
+        metachatr::lambda_result operator() (metachatr::jexpression expr) {
             throw fostlib::exceptions::not_implemented("module.cpp");
             //return boost::apply_visitor(first_level(scope), args);
         }

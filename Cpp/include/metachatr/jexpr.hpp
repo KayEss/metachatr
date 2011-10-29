@@ -21,22 +21,45 @@ namespace metachatr {
     namespace detail {
         /// Describes the storage of a j-expression
         class jexpression_impl;
+        /// Describes a lambda
+        class lambda_impl;
     }
 
 
     /// The j-expression as it is manipulated by the rest of the code
     typedef boost::shared_ptr< detail::jexpression_impl > jexpression;
 
+    /// A simple lambda type to start with
+    typedef boost::shared_ptr< detail::lambda_impl > lambda;
+
+    /// The result of a lambda expression is either a value (jexpression) or some code ready to run
+    class lambda_result {
+    public:
+        /// The result type itself
+        typedef boost::variant< jexpression, lambda > result_type;
+
+        /// Construct from a jexpression
+        lambda_result(jexpression);
+        /// Construct from a lambda
+        lambda_result(lambda);
+
+        /// Returns a jexpression from this result
+        const metachatr::detail::jexpression_impl *operator-> () const;
+
+    private:
+        result_type m_result;
+    };
+
 
     namespace detail {
         class lambda_impl {
         public:
+            /// Allow us to sub-class this and have destructors work correctly
             virtual ~lambda_impl();
-            virtual jexpression operator() (jexpression) = 0;
+            /// The execution of the lambda
+            virtual lambda_result operator() (jexpression) = 0;
         };
     }
-    /// A simple lambda type to start with
-    typedef boost::shared_ptr< detail::lambda_impl > lambda;
 
 
     /// The name bindings for a j-expression
