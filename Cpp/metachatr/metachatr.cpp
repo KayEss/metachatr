@@ -19,18 +19,13 @@ FSL_MAIN(
     metachatr::context builtins;
     builtins["module"] = metachatr::lib::module();
 //     builtins["+"] = metachatr::lib::plus();
-//     // Load the file
-//     fostlib::json ast = metachatr::filehandler(
-//         fostlib::coerce<boost::filesystem::wpath>(args[1].value())).json();
-//     // Buld the s-expression we will execute
-//     fostlib::json sexpr;
-//     fostlib::push_back(sexpr, "module");
-//     for ( fostlib::json::const_iterator i(ast.begin()); i != ast.end(); ++i )
-//         fostlib::push_back(sexpr, *i);
-//     // Execute the code in the AST
-//     metachatr::block code(sexpr);
-//     metachatr::block result = code(builtins);
-//     // Print the resultant JSON (for now)
+    // Load the file
+    metachatr::jexpression ast = metachatr::filehandler(
+        fostlib::coerce<boost::filesystem::wpath>(args[1].value()));
+    // Buld the s-expression we will execute
+    ast->function(fostlib::json("module"));
+    // Execute the code in the AST
+    // Print the resultant JSON (for now)
 //     out << fostlib::json::unparse(result.json(), true) << std::endl;
     return 0;
 }
