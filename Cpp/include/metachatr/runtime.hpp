@@ -20,7 +20,7 @@ namespace metachatr {
 
 
     /// Return a lambda which can be evaluated at any time
-    lambda eval(
+    lambda_result eval(
         boost::shared_ptr<metachatr::context> closure,
         jexpression expression);
 

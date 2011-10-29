@@ -23,6 +23,14 @@ metachatr::detail::lambda_impl::~lambda_impl() {
 */
 
 
+metachatr::lambda_result::lambda_result(metachatr::jexpression expr)
+: m_result(expr) {
+}
+metachatr::lambda_result::lambda_result(metachatr::lambda fn)
+: m_result(fn) {
+}
+
+
 const metachatr::detail::jexpression_impl *metachatr::lambda_result::operator-> () const {
     const detail::jexpression_impl *p = boost::get<detail::jexpression_impl>(&m_result);
     if ( p )

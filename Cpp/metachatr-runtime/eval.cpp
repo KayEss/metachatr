@@ -15,12 +15,12 @@ namespace {
     };
 }
 
-metachatr::lambda metachatr::eval(
+metachatr::lambda_result metachatr::eval(
     boost::shared_ptr<metachatr::context> closure,
     jexpression expression
 ) {
     if ( !expression->function().isnull() )
         throw fostlib::exceptions::not_implemented("eval -- with function");
     else
-        throw fostlib::exceptions::not_implemented("eval -- without function");
+        return expression;
 }
