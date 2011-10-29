@@ -7,11 +7,20 @@
 
 
 #include <metachatr/runtime.hpp>
+#include <boost/lambda/bind.hpp>
 
+
+namespace {
+    class identity : public metachatr::detail::lambda_impl {
+    };
+}
 
 metachatr::lambda metachatr::eval(
     boost::shared_ptr<metachatr::context> closure,
-    jexpression expressoin
+    jexpression expression
 ) {
-    throw fostlib::exceptions::not_implemented("eval");
+    if ( !expression->function().isnull() )
+        throw fostlib::exceptions::not_implemented("eval -- with function");
+    else
+        throw fostlib::exceptions::not_implemented("eval -- without function");
 }
