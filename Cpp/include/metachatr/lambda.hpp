@@ -33,8 +33,8 @@ namespace metachatr {
         /// Construct from a lambda
         lambda_result(lambda);
 
-        /// Returns the result as JSON
-        fostlib::json as_json() const;
+        /// Returns the result as a j-expression
+        jexpression as_jexpression() const;
 
         /// Runs the lambda result as a function with the given arguments
         lambda_result operator() (const argument_tuple &) const;

@@ -20,7 +20,7 @@ metachatr::lambda_result metachatr::eval(
         if ( fp != scope.end() ) {
             metachatr::lambda_result fn = fp->second;
             metachatr::lambda_result result = fn(expression->arguments());
-            fostlib::logging::debug("Evaluating", fn.as_json());
+            fostlib::logging::debug("Evaluating", fn.as_jexpression()->as_json());
             return result;
         }
         throw fostlib::exceptions::not_implemented("eval -- with function to unbound name");

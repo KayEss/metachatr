@@ -93,7 +93,7 @@ fostlib::json metachatr::detail::jexpression_impl::as_json() const {
         fostlib::json scope;
         fostlib::insert(scope, fostlib::string(), sexpr);
         for ( context::const_iterator c(bindings().begin()); c != bindings().end(); ++c )
-            fostlib::insert(scope, c->first, c->second.as_json());
+            fostlib::insert(scope, c->first, c->second.as_jexpression()->as_json());
         return scope;
     } else {
         fostlib::push_back(js, "quote");

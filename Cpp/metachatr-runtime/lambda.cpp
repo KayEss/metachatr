@@ -63,24 +63,27 @@ metachatr::lambda_result metachatr::lambda_result::operator() (
 
 
 namespace {
-    struct json : boost::static_visitor< fostlib::json > {
-        template<typename T>
-        fostlib::json operator() (T inner) const {
-            return inner->as_json();
+    struct jexpr : boost::static_visitor< metachatr::jexpression > {
+        metachatr::jexpression operator() (metachatr::jexpression expr) const {
+            return expr;
+        }
+        metachatr::jexpression operator() (metachatr::lambda fn) const {
+            throw fostlib::exceptions::not_implemented(
+                "Convert lambda_result (which is a lambda) to a jexpression");
         }
     };
 }
-fostlib::json metachatr::lambda_result::as_json() const {
-    return boost::apply_visitor(json(), m_result);
+metachatr::jexpression metachatr::lambda_result::as_jexpression() const {
+    return boost::apply_visitor(jexpr(), m_result);
 }
 
 
 bool metachatr::lambda_result::operator== ( const metachatr::lambda_result &r ) const {
-    return as_json() == r.as_json();
+    return as_jexpression() == r.as_jexpression();
 }
 
 
 fostlib::ostream &operator<< (fostlib::ostream &o, const metachatr::lambda_result &r) {
-    return o << r.as_json();
+    return o << r.as_jexpression();
 }
 
