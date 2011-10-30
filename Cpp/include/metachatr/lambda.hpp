@@ -39,6 +39,9 @@ namespace metachatr {
         /// Runs the lambda result as a function with the given arguments
         lambda_result operator() (const argument_tuple &) const;
 
+        /// Check to see if two lambda_results are the same
+        bool operator== ( const lambda_result & ) const;
+
     private:
         result_type m_result;
     };
@@ -65,6 +68,10 @@ namespace metachatr {
 
 
 }
+
+
+/// Allow the result to be output to a stream
+fostlib::ostream &operator<< ( fostlib::ostream &, const metachatr::lambda_result & );
 
 
 #endif // METACHATR_LAMBDA_HPP

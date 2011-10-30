@@ -27,9 +27,7 @@ FSL_TEST_FUNCTION( plus ) {
 
     metachatr::lambda_result result = metachatr::eval(builtins, expr);
 
-    fostlib::json expected;
-    fostlib::push_back(expected, "quoted");
-    fostlib::push_back(expected, 9);
+    metachatr::lambda_result expected(fostlib::json(9));
 
-    FSL_CHECK_EQ(result.as_json(), expected);
+    FSL_CHECK_EQ(result, expected);
 }

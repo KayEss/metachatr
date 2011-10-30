@@ -74,3 +74,13 @@ fostlib::json metachatr::lambda_result::as_json() const {
     return boost::apply_visitor(json(), m_result);
 }
 
+
+bool metachatr::lambda_result::operator== ( const metachatr::lambda_result &r ) const {
+    return as_json() == r.as_json();
+}
+
+
+fostlib::ostream &operator<< (fostlib::ostream &o, const metachatr::lambda_result &r) {
+    return o << r.as_json();
+}
+

@@ -7,6 +7,7 @@
 
 
 #include <metachatr/runtime.hpp>
+#include <fost/log>
 
 
 namespace {
@@ -17,6 +18,7 @@ namespace {
             int64_t total = 0;
             for ( metachatr::argument_tuple::const_iterator a(args.begin()); a != args.end(); ++a ) {
                 metachatr::lambda_result arg_value = eval(metachatr::context(), *a);
+                fostlib::logging::debug("+", total, arg_value.as_json());
             }
             return fostlib::json(total);
         }
