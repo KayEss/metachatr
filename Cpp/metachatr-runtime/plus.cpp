@@ -14,7 +14,11 @@ namespace {
         metachatr::lambda_result operator() (
             const metachatr::argument_tuple &args
         ) {
-            throw fostlib::exceptions::not_implemented("[+]");
+            int64_t total = 0;
+            for ( metachatr::argument_tuple::const_iterator a(args.begin()); a != args.end(); ++a ) {
+                metachatr::lambda_result arg_value = eval(metachatr::context(), *a);
+            }
+            return fostlib::json(total);
         }
         fostlib::json as_json() const {
             return fostlib::json("+");
