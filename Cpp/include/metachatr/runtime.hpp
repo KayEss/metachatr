@@ -14,6 +14,7 @@
 #include <fost/core>
 #include <fost/unicode>
 #include <metachatr/jexpr.hpp>
+#include <metachatr/lambda.hpp>
 
 
 namespace metachatr {

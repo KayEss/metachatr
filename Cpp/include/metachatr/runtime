@@ -11,8 +11,9 @@
 #pragma once
 
 
-#include <metachatr/runtime.hpp>
 #include <metachatr/jexpr.hpp>
+#include <metachatr/lambda.hpp>
+#include <metachatr/runtime.hpp>
 
 
 #endif // METACHATR_RUNTIME

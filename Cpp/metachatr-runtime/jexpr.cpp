@@ -10,6 +10,7 @@
 #include <fost/push_back>
 #include <fost/string>
 #include <metachatr/jexpr.hpp>
+#include <metachatr/lambda.hpp>
 #include <metachatr/runtime.hpp>
 
 

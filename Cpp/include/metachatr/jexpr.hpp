@@ -18,36 +18,6 @@
 namespace metachatr {
 
 
-    /// The result of a lambda expression is either a value (jexpression) or some code ready to run
-    class lambda_result {
-    public:
-        /// The result type itself
-        typedef boost::variant< jexpression, lambda > result_type;
-
-        /// Construct from a jexpression
-        lambda_result(jexpression);
-        /// Construct from a lambda
-        lambda_result(lambda);
-
-        /// Returns a jexpression from this result
-        const metachatr::detail::jexpression_impl *operator-> () const;
-
-    private:
-        result_type m_result;
-    };
-
-
-    namespace detail {
-        class lambda_impl {
-        public:
-            /// Allow us to sub-class this and have destructors work correctly
-            virtual ~lambda_impl();
-            /// The execution of the lambda
-            virtual lambda_result operator() (jexpression) = 0;
-        };
-    }
-
-
     /// The name bindings for a j-expression
     typedef std::map< fostlib::string, lambda > context;
 
