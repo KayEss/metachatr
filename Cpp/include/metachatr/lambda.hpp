@@ -39,13 +39,21 @@ namespace metachatr {
     };
 
 
+    /// The name bindings for a j-expression
+    typedef std::map< fostlib::string, lambda_result > context;
+
+
     namespace detail {
         class lambda_impl {
         public:
             /// Allow us to sub-class this and have destructors work correctly
             virtual ~lambda_impl();
+
             /// The execution of the lambda
-            virtual lambda_result operator() (jexpression) = 0;
+            virtual lambda_result operator() (
+                const metachatr::context &scope,
+                const fostlib::string &fn_name,
+                const argument_tuple &args) = 0;
 
             /// Convert the lambda to JSON
             virtual fostlib::json as_json() const = 0;

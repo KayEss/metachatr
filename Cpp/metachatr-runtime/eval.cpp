@@ -11,13 +11,16 @@
 
 
 metachatr::lambda_result metachatr::eval(
-    boost::shared_ptr<metachatr::context> closure,
+    const metachatr::context &scope,
     jexpression expression
 ) {
     if ( !expression->function().isnull() ) {
         fostlib::string fn_name = fostlib::coerce<fostlib::string>(expression->function());
-        metachatr::lambda_result fn = (*closure)[fn_name];
-        fostlib::logging::debug("Evaluating", fn.as_json());
+        metachatr::context::const_iterator fp(scope.find(fn_name));
+        if ( fp != scope.end() ) {
+            metachatr::lambda_result fn = fp->second;
+            fostlib::logging::debug("Evaluating", fn.as_json());
+        }
         throw fostlib::exceptions::not_implemented("eval -- with function");
     } else
         return expression;

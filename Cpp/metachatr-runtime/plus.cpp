@@ -11,8 +11,11 @@
 
 namespace {
     class plus_impl : public metachatr::detail::lambda_impl {
-        metachatr::lambda_result operator() (metachatr::jexpression expr) {
-            throw fostlib::exceptions::not_implemented("metachatr.+");
+        metachatr::lambda_result operator() (
+            const metachatr::context &, const fostlib::string &,
+            const metachatr::argument_tuple &args
+        ) {
+            throw fostlib::exceptions::not_implemented("[+]");
         }
         fostlib::json as_json() const {
             return fostlib::json("+");

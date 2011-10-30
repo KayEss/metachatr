@@ -22,8 +22,8 @@ FSL_TEST_FUNCTION( plus ) {
 
     metachatr::jexpression expr = metachatr::build_jexpression(prog);
 
-    boost::shared_ptr< metachatr::context > builtins( new metachatr::context );
-    (*builtins)["+"] = metachatr::lib::plus();
+    metachatr::context builtins;
+    builtins["+"] = metachatr::lib::plus();
 
     metachatr::lambda_result result = metachatr::eval(builtins, expr);
 }

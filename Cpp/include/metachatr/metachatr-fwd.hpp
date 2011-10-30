@@ -32,6 +32,11 @@ namespace metachatr {
     /// A simple lambda type to start with
     typedef boost::shared_ptr< detail::lambda_impl > lambda;
 
+
+    /// The list of arguments to an expression
+    typedef std::vector< jexpression > argument_tuple;
+
+
 }
 
 

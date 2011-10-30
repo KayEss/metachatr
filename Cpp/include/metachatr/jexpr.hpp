@@ -18,13 +18,6 @@
 namespace metachatr {
 
 
-    /// The name bindings for a j-expression
-    typedef std::map< fostlib::string, lambda_result > context;
-
-    /// The list of arguments to an expression
-    typedef std::vector< jexpression > argument_tuple;
-
-
     namespace detail {
         /// Describes a j-expression
         class jexpression_impl : boost::noncopyable {
