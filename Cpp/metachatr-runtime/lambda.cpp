@@ -36,18 +36,6 @@ metachatr::lambda_result::lambda_result(metachatr::lambda fn)
 }
 
 
-const metachatr::detail::jexpression_impl *metachatr::lambda_result::operator-> () const {
-    const detail::jexpression_impl *p = boost::get<detail::jexpression_impl>(&m_result);
-    if ( p )
-        return p;
-    else {
-        fostlib::exceptions::null e("This lambda doesn't have a jexpression in it");
-        fostlib::insert(e.data(), "lambda-result", as_json());
-        throw e;
-    }
-}
-
-
 namespace {
     struct json : boost::static_visitor< fostlib::json > {
         template<typename T>

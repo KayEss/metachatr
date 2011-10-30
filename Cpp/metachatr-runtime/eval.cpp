@@ -10,11 +10,6 @@
 #include <boost/lambda/bind.hpp>
 
 
-namespace {
-    class identity : public metachatr::detail::lambda_impl {
-    };
-}
-
 metachatr::lambda_result metachatr::eval(
     boost::shared_ptr<metachatr::context> closure,
     jexpression expression

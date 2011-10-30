@@ -31,9 +31,6 @@ namespace metachatr {
         /// Construct from a lambda
         lambda_result(lambda);
 
-        /// Returns a jexpression from this result
-        const metachatr::detail::jexpression_impl *operator-> () const;
-
         /// Returns the result as JSON
         fostlib::json as_json() const;
 

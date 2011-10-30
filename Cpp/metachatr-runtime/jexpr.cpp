@@ -7,6 +7,7 @@
 
 
 #include <fost/insert>
+#include <fost/log>
 #include <fost/push_back>
 #include <fost/string>
 #include <metachatr/jexpr.hpp>
@@ -30,11 +31,11 @@ namespace {
         }
         metachatr::jexpression operator() ( const fostlib::json::object_t &o ) const {
             boost::shared_ptr<metachatr::context> bindings(
-                new metachatr::context);;
+                new metachatr::context);
             for ( fostlib::json::object_t::const_iterator i(o.begin()); i != o.end(); ++i )
                 if ( !i->first.empty() )
-                    (*bindings)[i->first] = metachatr::lambda_result(metachatr::eval(
-                        bindings, metachatr::build_jexpression(*i->second)));
+                    (*bindings)[i->first] = metachatr::lambda_result(
+                        metachatr::build_jexpression(*i->second));
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
                 return metachatr::jexpression(
@@ -50,6 +51,17 @@ namespace {
     };
 }
 
+metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
+    metachatr::jexpression jexpr = boost::apply_visitor(builder(), a);
+    fostlib::logging::debug("Asked to build a j-expression", a, jexpr->as_json());
+    return jexpr;
+}
+
+
+/*
+    metachatr::detail::jexpression_impl
+*/
+
 
 metachatr::detail::jexpression_impl::jexpression_impl()
 : m_bindings(new context) {
@@ -64,10 +76,6 @@ metachatr::detail::jexpression_impl::jexpression_impl(
 ) : m_bindings(b), function(f), arguments(a) {
 }
 
-metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
-    return boost::apply_visitor(builder(), a);
-}
-
 const metachatr::context &metachatr::detail::jexpression_impl::bindings() const {
     return *m_bindings;
 }
@@ -76,7 +84,17 @@ const metachatr::context &metachatr::detail::jexpression_impl::bindings() const 
 fostlib::json metachatr::detail::jexpression_impl::as_json() const {
     fostlib::json js;
     if ( value().isnull() ) {
-        throw fostlib::exceptions::not_implemented("jexpression.as_json with an expression in it");
+        fostlib::json sexpr;
+        fostlib::push_back(sexpr, function());
+        for ( argument_tuple::const_iterator a(arguments().begin()); a != arguments().end(); ++a )
+            fostlib::push_back(sexpr, (*a)->as_json());
+        if ( bindings().begin() == bindings().end() )
+            return sexpr;
+        fostlib::json scope;
+        fostlib::insert(scope, fostlib::string(), sexpr);
+        for ( context::const_iterator c(bindings().begin()); c != bindings().end(); ++c )
+            fostlib::insert(scope, c->first, c->second.as_json());
+        return scope;
     } else {
         fostlib::push_back(js, "quote");
         fostlib::push_back(js, value());
