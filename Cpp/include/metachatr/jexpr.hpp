@@ -46,6 +46,9 @@ namespace metachatr {
             fostlib::accessors< argument_tuple > arguments;
             /// The value of the j-expression
             fostlib::accessors< fostlib::json > value;
+
+            /// Return the value of the jexpression as JSON in its canonical form
+            fostlib::json as_json() const;
         };
     }
 

@@ -32,6 +32,9 @@ namespace metachatr {
         /// Returns a jexpression from this result
         const metachatr::detail::jexpression_impl *operator-> () const;
 
+        /// Returns the result as JSON
+        fostlib::json as_json() const;
+
     private:
         result_type m_result;
     };
@@ -44,6 +47,9 @@ namespace metachatr {
             virtual ~lambda_impl();
             /// The execution of the lambda
             virtual lambda_result operator() (jexpression) = 0;
+
+            /// Convert the lambda to JSON
+            virtual fostlib::json as_json() const = 0;
         };
     }
 

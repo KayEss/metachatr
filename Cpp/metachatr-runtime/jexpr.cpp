@@ -24,6 +24,13 @@ namespace {
         metachatr::lambda_result operator() (metachatr::jexpression) {
             return result;
         }
+
+        fostlib::json as_json() const {
+            fostlib::json js;
+            fostlib::push_back(js, "<builtin>.identity");
+            fostlib::push_back(js, result.as_json());
+            return js;
+        }
     };
 
     struct builder : public boost::static_visitor< metachatr::jexpression > {
