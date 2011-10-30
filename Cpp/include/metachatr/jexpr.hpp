@@ -12,25 +12,11 @@
 
 
 #include <fost/core>
+#include <metachatr/metachatr-fwd.hpp>
 
 
 namespace metachatr {
 
-
-    /// Private members of metachatr
-    namespace detail {
-        /// Describes the storage of a j-expression
-        class jexpression_impl;
-        /// Describes a lambda
-        class lambda_impl;
-    }
-
-
-    /// The j-expression as it is manipulated by the rest of the code
-    typedef boost::shared_ptr< detail::jexpression_impl > jexpression;
-
-    /// A simple lambda type to start with
-    typedef boost::shared_ptr< detail::lambda_impl > lambda;
 
     /// The result of a lambda expression is either a value (jexpression) or some code ready to run
     class lambda_result {
