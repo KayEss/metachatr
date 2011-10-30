@@ -21,7 +21,7 @@ namespace metachatr {
 
 
     /// Return a lambda which can be evaluated at any time
-    lambda_result eval(const metachatr::context &closure, jexpression expression);
+    lambda_result eval(const metachatr::context &, jexpression);
 
 
     /// The Metachatr standard library
