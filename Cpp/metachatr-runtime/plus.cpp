@@ -15,7 +15,7 @@ namespace {
             throw fostlib::exceptions::not_implemented("metachatr.+");
         }
         fostlib::json as_json() const {
-            throw fostlib::exceptions::not_implemented("metachatr.+ as_json");
+            return fostlib::json("+");
         }
     };
     boost::shared_ptr< metachatr::detail::lambda_impl >
