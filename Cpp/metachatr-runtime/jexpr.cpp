@@ -15,24 +15,6 @@
 
 
 namespace {
-    struct identity : public metachatr::detail::lambda_impl {
-        metachatr::lambda_result result;
-        identity(metachatr::lambda_result r)
-        : result(r) {
-        }
-
-        metachatr::lambda_result operator() (metachatr::jexpression) {
-            return result;
-        }
-
-        fostlib::json as_json() const {
-            fostlib::json js;
-            fostlib::push_back(js, "<builtin>.identity");
-            fostlib::push_back(js, result.as_json());
-            return js;
-        }
-    };
-
     struct builder : public boost::static_visitor< metachatr::jexpression > {
         metachatr::jexpression operator() ( const fostlib::json::atom_t &t ) const {
             return metachatr::jexpression(
@@ -51,8 +33,8 @@ namespace {
                 new metachatr::context);;
             for ( fostlib::json::object_t::const_iterator i(o.begin()); i != o.end(); ++i )
                 if ( !i->first.empty() )
-                    (*bindings)[i->first] = metachatr::lambda(new identity( metachatr::eval(
-                        bindings, metachatr::build_jexpression(*i->second)) ));
+                    (*bindings)[i->first] = metachatr::lambda_result(metachatr::eval(
+                        bindings, metachatr::build_jexpression(*i->second)));
             fostlib::json::object_t::const_iterator p(o.find(fostlib::string()));
             if ( p == o.end() )
                 return metachatr::jexpression(
@@ -69,6 +51,9 @@ namespace {
 }
 
 
+metachatr::detail::jexpression_impl::jexpression_impl()
+: m_bindings(new context) {
+}
 metachatr::detail::jexpression_impl::jexpression_impl(
     const fostlib::json &v
 ) : m_bindings(new context), value(v) {

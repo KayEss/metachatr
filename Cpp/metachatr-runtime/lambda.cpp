@@ -25,6 +25,9 @@ metachatr::detail::lambda_impl::~lambda_impl() {
 */
 
 
+metachatr::lambda_result::lambda_result()
+: m_result(jexpression(new metachatr::detail::jexpression_impl)) {
+}
 metachatr::lambda_result::lambda_result(metachatr::jexpression expr)
 : m_result(expr) {
 }

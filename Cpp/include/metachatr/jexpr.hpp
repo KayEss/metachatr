@@ -12,14 +12,14 @@
 
 
 #include <fost/core>
-#include <metachatr/metachatr-fwd.hpp>
+#include <metachatr/lambda.hpp>
 
 
 namespace metachatr {
 
 
     /// The name bindings for a j-expression
-    typedef std::map< fostlib::string, lambda > context;
+    typedef std::map< fostlib::string, lambda_result > context;
 
     /// The list of arguments to an expression
     typedef std::vector< jexpression > argument_tuple;
@@ -30,6 +30,8 @@ namespace metachatr {
         class jexpression_impl : boost::noncopyable {
             boost::shared_ptr<context> m_bindings;
         public:
+            /// Construct an empty j-jexpression
+            jexpression_impl();
             /// Construct a j-expression value
             jexpression_impl(const fostlib::json &value);
             /// Construct a j-expression

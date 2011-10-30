@@ -24,6 +24,8 @@ namespace metachatr {
         /// The result type itself
         typedef boost::variant< jexpression, lambda > result_type;
 
+        /// Default construct a lambda_result which just returns an empty jexpression
+        lambda_result();
         /// Construct from a jexpression
         lambda_result(jexpression);
         /// Construct from a lambda
