@@ -26,6 +26,8 @@ namespace metachatr {
 
         /// Default construct a lambda_result which just returns an empty jexpression
         lambda_result();
+        /// Construct from a simple JSON value
+        lambda_result(const fostlib::json &);
         /// Construct from a jexpression
         lambda_result(jexpression);
         /// Construct from a lambda
