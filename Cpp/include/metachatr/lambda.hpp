@@ -34,6 +34,9 @@ namespace metachatr {
         /// Returns the result as JSON
         fostlib::json as_json() const;
 
+        /// Runs the lambda result as a function with the given arguments
+        lambda_result operator() (const argument_tuple &) const;
+
     private:
         result_type m_result;
     };
@@ -51,8 +54,6 @@ namespace metachatr {
 
             /// The execution of the lambda
             virtual lambda_result operator() (
-                const metachatr::context &scope,
-                const fostlib::string &fn_name,
                 const argument_tuple &args) = 0;
 
             /// Convert the lambda to JSON

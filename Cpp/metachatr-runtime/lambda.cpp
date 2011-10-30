@@ -37,6 +37,27 @@ metachatr::lambda_result::lambda_result(metachatr::lambda fn)
 
 
 namespace {
+    struct call : boost::static_visitor< metachatr::lambda_result > {
+        const metachatr::argument_tuple &args;
+        call(const metachatr::argument_tuple &args)
+        : args(args) {
+        }
+        metachatr::lambda_result operator() ( metachatr::jexpression expr ) const {
+            return expr;
+        }
+        metachatr::lambda_result operator() ( metachatr::lambda fn ) const {
+            return (*fn)(args);
+        }
+    };
+}
+metachatr::lambda_result metachatr::lambda_result::operator() (
+    const metachatr::argument_tuple &args
+) const {
+    throw fostlib::exceptions::not_implemented("lambda_result::operator");
+}
+
+
+namespace {
     struct json : boost::static_visitor< fostlib::json > {
         template<typename T>
         fostlib::json operator() (T inner) const {

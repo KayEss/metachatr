@@ -19,6 +19,7 @@ metachatr::lambda_result metachatr::eval(
         metachatr::context::const_iterator fp(scope.find(fn_name));
         if ( fp != scope.end() ) {
             metachatr::lambda_result fn = fp->second;
+            metachatr::lambda_result result = fn(expression->arguments());
             fostlib::logging::debug("Evaluating", fn.as_json());
         }
         throw fostlib::exceptions::not_implemented("eval -- with function");
