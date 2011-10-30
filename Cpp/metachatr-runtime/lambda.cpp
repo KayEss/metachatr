@@ -6,7 +6,9 @@
 */
 
 
+#include <metachatr/jexpr.hpp>
 #include <metachatr/lambda.hpp>
+#include <fost/insert>
 
 
 /*
@@ -35,7 +37,23 @@ const metachatr::detail::jexpression_impl *metachatr::lambda_result::operator-> 
     const detail::jexpression_impl *p = boost::get<detail::jexpression_impl>(&m_result);
     if ( p )
         return p;
-    else
-        throw fostlib::exceptions::null("This lambda doesn't have a jexpression in it");
+    else {
+        fostlib::exceptions::null e("This lambda doesn't have a jexpression in it");
+        fostlib::insert(e.data(), "lambda-result", as_json());
+        throw e;
+    }
+}
+
+
+namespace {
+    struct json : boost::static_visitor< fostlib::json > {
+        template<typename T>
+        fostlib::json operator() (T inner) const {
+            return inner->as_json();
+        }
+    };
+}
+fostlib::json metachatr::lambda_result::as_json() const {
+    return boost::apply_visitor(json(), m_result);
 }
 

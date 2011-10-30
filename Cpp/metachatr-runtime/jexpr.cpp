@@ -87,3 +87,15 @@ const metachatr::context &metachatr::detail::jexpression_impl::bindings() const 
     return *m_bindings;
 }
 
+
+fostlib::json metachatr::detail::jexpression_impl::as_json() const {
+    fostlib::json js;
+    if ( value().isnull() ) {
+        throw fostlib::exceptions::not_implemented("jexpression.as_json with an expression in it");
+    } else {
+        fostlib::push_back(js, "quote");
+        fostlib::push_back(js, value());
+    }
+    return js;
+}
+
