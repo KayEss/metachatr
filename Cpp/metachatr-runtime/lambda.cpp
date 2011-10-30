@@ -43,6 +43,8 @@ namespace {
         : args(args) {
         }
         metachatr::lambda_result operator() ( metachatr::jexpression expr ) const {
+            if ( args.size() != 0 )
+                throw fostlib::exceptions::not_implemented("Calling a jexpression with arguments");
             return expr;
         }
         metachatr::lambda_result operator() ( metachatr::lambda fn ) const {
@@ -53,7 +55,7 @@ namespace {
 metachatr::lambda_result metachatr::lambda_result::operator() (
     const metachatr::argument_tuple &args
 ) const {
-    throw fostlib::exceptions::not_implemented("lambda_result::operator");
+    return boost::apply_visitor(call(args), m_result);
 }
 
 
