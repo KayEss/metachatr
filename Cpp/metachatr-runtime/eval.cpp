@@ -21,8 +21,9 @@ metachatr::lambda_result metachatr::eval(
             metachatr::lambda_result fn = fp->second;
             metachatr::lambda_result result = fn(expression->arguments());
             fostlib::logging::debug("Evaluating", fn.as_json());
+            return result;
         }
-        throw fostlib::exceptions::not_implemented("eval -- with function");
+        throw fostlib::exceptions::not_implemented("eval -- with function to unbound name");
     } else
         return expression;
 }
