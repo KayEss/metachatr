@@ -18,7 +18,7 @@ FSL_MAIN(
     // Build the block that describes the builtin functions
     metachatr::context builtins;
     builtins["module"] = metachatr::lib::module();
-//     builtins["+"] = metachatr::lib::plus();
+    builtins["+"] = metachatr::lib::plus();
     // Load the file
     metachatr::jexpression ast = metachatr::filehandler(
         fostlib::coerce<boost::filesystem::wpath>(args[1].value()));
