@@ -66,4 +66,12 @@ fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::context & )
 fostlib::ostream &operator << ( fostlib::ostream &, const metachatr::argument_tuple & );
 
 
+/// Allow us to compare two jexpressions for equality
+inline
+bool operator== (metachatr::jexpression left, metachatr::jexpression right) {
+    return left->as_json() == right->as_json();
+}
+
+
+
 #endif // METACHATR_JEXPR_HPP
