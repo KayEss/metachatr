@@ -77,6 +77,22 @@ metachatr::jexpression metachatr::lambda_result::as_jexpression() const {
 }
 
 
+namespace {
+    struct value : boost::static_visitor< fostlib::json > {
+        fostlib::json operator() (metachatr::jexpression expr) const {
+            return expr->value();
+        }
+        fostlib::json operator() (metachatr::lambda fn) const {
+            throw fostlib::exceptions::not_implemented(
+                "Fetching a value from a lambda_result which contains a lambda");
+        }
+    };
+}
+fostlib::json metachatr::lambda_result::value() const {
+    return boost::apply_visitor(::value(), m_result);
+}
+
+
 bool metachatr::lambda_result::operator== ( const metachatr::lambda_result &r ) const {
     return as_jexpression() == r.as_jexpression();
 }

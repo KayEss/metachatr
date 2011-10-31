@@ -18,7 +18,9 @@ namespace {
             int64_t total = 0;
             for ( metachatr::argument_tuple::const_iterator a(args.begin()); a != args.end(); ++a ) {
                 metachatr::lambda_result arg_value = eval(metachatr::context(), *a);
-                fostlib::logging::debug("+", total, arg_value.as_jexpression()->as_json());
+                fostlib::json number = arg_value.value();
+                fostlib::logging::debug("+", total, number);
+                total += number.get<int64_t>().value();
             }
             return fostlib::json(total);
         }

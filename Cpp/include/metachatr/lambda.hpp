@@ -39,6 +39,9 @@ namespace metachatr {
         /// Runs the lambda result as a function with the given arguments
         lambda_result operator() (const argument_tuple &) const;
 
+        /// Returns the value of the lambda result
+        fostlib::json value() const;
+
         /// Check to see if two lambda_results are the same
         bool operator== ( const lambda_result & ) const;
 
