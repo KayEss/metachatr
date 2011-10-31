@@ -68,8 +68,7 @@ namespace {
             return expr;
         }
         metachatr::jexpression operator() (metachatr::lambda fn) const {
-            throw fostlib::exceptions::not_implemented(
-                "Convert lambda_result (which is a lambda) to a jexpression");
+            return fn->as_jexpression();
         }
     };
 }

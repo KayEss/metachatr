@@ -27,6 +27,8 @@ namespace metachatr {
             jexpression_impl();
             /// Construct a j-expression value
             jexpression_impl(const fostlib::json &value);
+            /// Construct a j-expression with only a function names
+            jexpression_impl(const fostlib::string &);
             /// Construct a j-expression
             jexpression_impl(
                 boost::shared_ptr< context >,

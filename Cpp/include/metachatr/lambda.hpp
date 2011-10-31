@@ -61,8 +61,8 @@ namespace metachatr {
             virtual lambda_result operator() (
                 const argument_tuple &args) = 0;
 
-            /// Convert the lambda to JSON
-            virtual fostlib::json as_json() const = 0;
+            /// Convert the lambda to a j-expression
+            virtual jexpression as_jexpression() const = 0;
         };
     }
 

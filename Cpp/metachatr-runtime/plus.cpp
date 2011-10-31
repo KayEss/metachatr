@@ -22,8 +22,9 @@ namespace {
             }
             return fostlib::json(total);
         }
-        fostlib::json as_json() const {
-            return fostlib::json("+");
+        metachatr::jexpression as_jexpression() const {
+            return metachatr::jexpression(
+                new metachatr::detail::jexpression_impl(fostlib::string("+")));
         }
     };
     boost::shared_ptr< metachatr::detail::lambda_impl >

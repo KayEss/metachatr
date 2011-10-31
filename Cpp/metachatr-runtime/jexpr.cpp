@@ -70,11 +70,15 @@ metachatr::detail::jexpression_impl::jexpression_impl(
     const fostlib::json &v
 ) : m_bindings(new context), value(v) {
 }
-
+metachatr::detail::jexpression_impl::jexpression_impl(
+    const fostlib::string &f
+) : m_bindings(new context), function(fostlib::json(f)) {
+}
 metachatr::detail::jexpression_impl::jexpression_impl(
     boost::shared_ptr< context > b, const fostlib::json &f, const argument_tuple &a
 ) : m_bindings(b), function(f), arguments(a) {
 }
+
 
 const metachatr::context &metachatr::detail::jexpression_impl::bindings() const {
     return *m_bindings;

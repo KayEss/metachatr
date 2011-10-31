@@ -65,8 +65,8 @@ namespace {
             throw fostlib::exceptions::not_implemented("module.cpp -- operator()");
             //return boost::apply_visitor(first_level(scope), args);
         }
-        fostlib::json as_json() const {
-            throw fostlib::exceptions::not_implemented("module.cpp -- as_json");
+        metachatr::jexpression as_jexpression() const {
+            throw fostlib::exceptions::not_implemented("module.cpp -- as_jexpression");
         }
     };
     boost::shared_ptr< metachatr::detail::lambda_impl >
