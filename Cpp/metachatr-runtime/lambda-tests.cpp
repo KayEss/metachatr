@@ -31,3 +31,26 @@ FSL_TEST_FUNCTION( plus ) {
 
     FSL_CHECK_EQ(result, expected);
 }
+
+
+FSL_TEST_FUNCTION( nested_plus ) {
+    fostlib::json prog;
+    fostlib::push_back(prog, "+");
+    fostlib::push_back(prog, fostlib::json());
+    fostlib::push_back(prog, 1, "+");
+    fostlib::push_back(prog, 1, 1);
+    fostlib::push_back(prog, 1, 3);
+    fostlib::push_back(prog, 5);
+
+    metachatr::jexpression expr = metachatr::build_jexpression(prog);
+
+    metachatr::context builtins;
+    builtins["+"] = metachatr::lib::plus();
+
+    metachatr::lambda_result result = metachatr::eval(builtins, expr);
+
+    metachatr::lambda_result expected(fostlib::json(9));
+
+    FSL_CHECK_EQ(result, expected);
+}
+
