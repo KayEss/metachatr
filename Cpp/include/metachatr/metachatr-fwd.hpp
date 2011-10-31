@@ -23,14 +23,21 @@ namespace metachatr {
         class jexpression_impl;
         /// Describes a lambda
         class lambda_impl;
+        /// Describes a lexical scope
+        class scope_impl;
     }
 
 
     /// The j-expression as it is manipulated by the rest of the code
     typedef boost::shared_ptr< detail::jexpression_impl > jexpression;
 
+
     /// A simple lambda type to start with
     typedef boost::shared_ptr< detail::lambda_impl > lambda;
+
+
+    /// A lexical scope
+    typedef boost::shared_ptr< detail::scope_impl > scope;
 
 
     /// The list of arguments to an expression
