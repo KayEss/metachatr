@@ -24,7 +24,7 @@ FSL_TEST_FUNCTION( plus ) {
 
     metachatr::context builtins;
     builtins["+"] = metachatr::lib::plus();
-    metachatr::scope s(metachatr::lookup(builtins));
+    metachatr::scope s = metachatr::lookup(builtins);
 
     metachatr::lambda_result result = metachatr::eval(s, expr);
 
@@ -47,7 +47,7 @@ FSL_TEST_FUNCTION( nested_plus ) {
 
     metachatr::context builtins;
     builtins["+"] = metachatr::lib::plus();
-    metachatr::scope s(metachatr::lookup(builtins));
+    metachatr::scope s = metachatr::lookup(builtins);
 
     metachatr::lambda_result result = metachatr::eval(s, expr);
 

@@ -41,10 +41,10 @@ metachatr::lambda_result::lambda_result(metachatr::lambda fn)
 
 namespace {
     struct call : boost::static_visitor< metachatr::lambda_result > {
-        metachatr::scope scope;
+        metachatr::scope names;
         const metachatr::argument_tuple &args;
-        call(metachatr::scope, const metachatr::argument_tuple &args)
-        : scope(scope), args(args) {
+        call(metachatr::scope names, const metachatr::argument_tuple &args)
+        : names(names), args(args) {
         }
         metachatr::lambda_result operator() ( metachatr::jexpression expr ) const {
             if ( args.size() != 0 )
@@ -52,7 +52,7 @@ namespace {
             return expr;
         }
         metachatr::lambda_result operator() ( metachatr::lambda fn ) const {
-            return (*fn)(scope, args);
+            return (*fn)(names, args);
         }
     };
 }
