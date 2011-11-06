@@ -60,7 +60,7 @@ namespace {
 
     class module_impl : public metachatr::detail::lambda_impl {
         metachatr::lambda_result operator() (
-            const metachatr::argument_tuple &args
+            metachatr::scope, const metachatr::argument_tuple &
         ) {
             throw fostlib::exceptions::not_implemented("module.cpp -- operator()");
             //return boost::apply_visitor(first_level(scope), args);

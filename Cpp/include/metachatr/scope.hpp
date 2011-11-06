@@ -12,20 +12,16 @@
 
 
 #include <fost/core>
-#include <metachatr/lambda.hpp>
 
 
 namespace metachatr {
 
 
-    namespace detail {
+    class lambda_result;
 
 
-        class scope_impl : boost::noncopyable {
-        };
-
-
-    }
+    /// A lexical scope is itself implemented as a lambda
+    typedef boost::function< lambda_result ( const fostlib::string & ) > scope;
 
 
 }

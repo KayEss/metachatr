@@ -15,13 +15,14 @@
 #include <fost/unicode>
 #include <metachatr/jexpr.hpp>
 #include <metachatr/lambda.hpp>
+#include <metachatr/scope.hpp>
 
 
 namespace metachatr {
 
 
     /// Return a lambda which can be evaluated at any time
-    lambda_result eval(const metachatr::context &, jexpression);
+    lambda_result eval(scope, jexpression);
 
 
     /// The Metachatr standard library

@@ -36,10 +36,6 @@ namespace metachatr {
     typedef boost::shared_ptr< detail::lambda_impl > lambda;
 
 
-    /// A lexical scope
-    typedef boost::shared_ptr< detail::scope_impl > scope;
-
-
     /// The list of arguments to an expression
     typedef std::vector< jexpression > argument_tuple;
 

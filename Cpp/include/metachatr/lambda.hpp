@@ -13,6 +13,7 @@
 
 #include <fost/core>
 #include <metachatr/metachatr-fwd.hpp>
+#include <metachatr/scope.hpp>
 
 
 namespace metachatr {
@@ -37,7 +38,7 @@ namespace metachatr {
         jexpression as_jexpression() const;
 
         /// Runs the lambda result as a function with the given arguments
-        lambda_result operator() (const argument_tuple &) const;
+        lambda_result operator() (scope, const argument_tuple &) const;
 
         /// Returns the value of the lambda result
         fostlib::json value() const;
@@ -54,6 +55,10 @@ namespace metachatr {
     typedef std::map< fostlib::string, lambda_result > context;
 
 
+    /// Return the scope look up lambda from one of these contexts
+    scope lookup(const context &);
+
+
     namespace detail {
         class lambda_impl {
         public:
@@ -62,7 +67,7 @@ namespace metachatr {
 
             /// The execution of the lambda
             virtual lambda_result operator() (
-                const argument_tuple &args) = 0;
+                scope, const argument_tuple &args) = 0;
 
             /// Convert the lambda to a j-expression
             virtual jexpression as_jexpression() const = 0;
