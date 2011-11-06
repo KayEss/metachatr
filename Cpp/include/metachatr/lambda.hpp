@@ -13,10 +13,16 @@
 
 #include <fost/core>
 #include <metachatr/metachatr-fwd.hpp>
-#include <metachatr/scope.hpp>
 
 
 namespace metachatr {
+
+
+    class lambda_result;
+
+
+    /// A lexical scope is itself implemented as a lambda
+    typedef boost::function< lambda_result ( const fostlib::string & ) > scope;
 
 
     /// The result of a lambda expression is either a value (jexpression) or some code ready to run
@@ -49,14 +55,6 @@ namespace metachatr {
     private:
         result_type m_result;
     };
-
-
-    /// The name bindings for a j-expression
-    typedef std::map< fostlib::string, lambda_result > context;
-
-
-    /// Return the scope look up lambda from one of these contexts
-    scope lookup(const context &);
 
 
     namespace detail {

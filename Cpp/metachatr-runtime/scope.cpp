@@ -7,6 +7,7 @@
 
 
 #include <metachatr/lambda.hpp>
+#include <metachatr/scope.hpp>
 #include <boost/lambda/bind.hpp>
 
 

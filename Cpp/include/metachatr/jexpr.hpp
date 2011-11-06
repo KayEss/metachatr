@@ -13,6 +13,7 @@
 
 #include <fost/core>
 #include <metachatr/lambda.hpp>
+#include <metachatr/scope.hpp>
 
 
 namespace metachatr {

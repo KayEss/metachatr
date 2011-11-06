@@ -17,11 +17,12 @@
 namespace metachatr {
 
 
-    class lambda_result;
+    /// The name bindings for a j-expression
+    typedef std::map< fostlib::string, lambda_result > context;
 
 
-    /// A lexical scope is itself implemented as a lambda
-    typedef boost::function< lambda_result ( const fostlib::string & ) > scope;
+    /// Return the scope look up lambda from one of these contexts
+    scope lookup(const context &);
 
 
 }
