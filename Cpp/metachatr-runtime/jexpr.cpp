@@ -1,5 +1,5 @@
 /*
-    Copyright 2011, Kirit Saelensminde. http://www.kirit.com/
+    Copyright 2011-2012, Kirit Saelensminde. http://www.kirit.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -53,7 +53,7 @@ namespace {
 
 metachatr::jexpression metachatr::build_jexpression(const fostlib::json &a) {
     metachatr::jexpression jexpr = boost::apply_visitor(builder(), a);
-    fostlib::logging::debug("Asked to build a j-expression", a, jexpr->as_json());
+    fostlib::log::debug("Asked to build a j-expression", a, jexpr->as_json());
     return jexpr;
 }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2011, Kirit Saelensminde. http://www.kirit.com/
+    Copyright 2011-2012, Kirit Saelensminde. http://www.kirit.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -19,7 +19,7 @@ namespace {
             for ( metachatr::argument_tuple::const_iterator a(args.begin()); a != args.end(); ++a ) {
                 metachatr::lambda_result arg_value = eval(scope, *a);
                 fostlib::json number = arg_value.value();
-                fostlib::logging::debug("+", total, number);
+                fostlib::log::debug("+", total, number);
                 total += number.get<int64_t>().value();
             }
             return fostlib::json(total);
